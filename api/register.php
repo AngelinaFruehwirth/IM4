@@ -7,9 +7,10 @@ require_once '../system/config.php'; //verbindet mit Datenbank
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email'] ?? '');
+    $name    = trim($_POST['name'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    if (!$email || !$password) {
+    if (!$email || !$password || !$name) {
         echo json_encode(["status" => "error", "message" => "Email and password are required"]);
         exit;
     }
@@ -26,9 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert the new user
-    $insert = $pdo->prepare("INSERT INTO users (email, password) VALUES (:email, :pass)");
+    $insert = $pdo->prepare("INSERT INTO users (email, name, password) VALUES (:email, :name, :password)");
     $insert->execute([
         ':email' => $email,
+        ':name' => $name,
         ':pass'  => $hashedPassword
     ]);
 
