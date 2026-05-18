@@ -1,27 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Register</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <h1>Register</h1>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <form id="registerForm">
-      <div>
-        <label>Email</label>
-        <input type="email" id="email" required />
+  <title>Registrieren</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <main class="page">
+
+    <section class="form-card">
+
+      <a href="index.html" class="close-button">×</a>
+
+      <div class="cloud-circle">
+        <img src="./resources/assets/Wolken_gut_register.png" alt="Freundliche Wolke">
       </div>
-      <div>
-        <label>Password</label>
-        <input type="password" id="password" required />
-      </div>
-      <button type="submit">Register</button>
-    </form>
 
-    <p>Already have an account? <a href="login.html">Login here</a>.</p>
+      <h1>
+        Erstelle jetzt <br>
+        dein <span>Konto.</span>
+      </h1>
 
-    <script src="js/register.js"></script>
-  </body>
+      <form id="registerForm">
+
+        <input
+          type="text"
+          id="name"
+          placeholder="Name"
+        />
+
+        <input
+          type="email"
+          id="email"
+          placeholder="E-Mail"
+          required
+        />
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Passwort"
+          required
+        />
+
+        <button type="submit" class="btn btn-outline">
+          Jetzt registrieren
+        </button>
+
+      </form>
+
+    </section>
+
+  </main>
+
+  <script src="js/register.js"></script>
+
+</body>
 </html>
