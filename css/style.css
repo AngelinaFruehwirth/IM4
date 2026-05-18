@@ -77,6 +77,8 @@ body {
   padding: 24px;
 }
 
+/* STARTSEITE */
+
 .hero {
   width: 100%;
   max-width: 520px;
@@ -86,6 +88,39 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
+/* FORM SEITEN LOGIN / REGISTER */
+
+.form-card {
+  position: relative;
+
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.close-button {
+  position: absolute;
+  top: -34px;
+  right: -10px;
+
+  font-size: clamp(42px, 4vw, 58px);
+  line-height: 1;
+  font-weight: 800;
+
+  color: #DDDDDD;
+  text-decoration: none;
+}
+
+.blue-text {
+  color: var(--blue);
+}
+
+/* WOLKE */
 
 .cloud-circle {
   width: clamp(150px, 16vw, 230px);
@@ -100,11 +135,19 @@ body {
   margin-bottom: clamp(36px, 6vh, 64px);
 }
 
+.form-card .cloud-circle {
+  width: clamp(120px, 12vw, 170px);
+  height: clamp(120px, 12vw, 170px);
+  margin-bottom: clamp(48px, 7vh, 70px);
+}
+
 .cloud-circle img {
   width: 78%;
   height: auto;
   display: block;
 }
+
+/* TYPO */
 
 h1 {
   font-size: clamp(32px, 4vw, 64px);
@@ -113,6 +156,13 @@ h1 {
   letter-spacing: -2px;
   color: var(--text);
   margin-bottom: clamp(18px, 3vh, 28px);
+}
+
+.form-card h1 {
+  font-size: clamp(34px, 3.2vw, 52px);
+  line-height: 1.18;
+  letter-spacing: -1.5px;
+  margin-bottom: clamp(28px, 4vh, 42px);
 }
 
 h1 span {
@@ -125,6 +175,8 @@ p {
   color: #000000;
   margin-bottom: clamp(46px, 8vh, 88px);
 }
+
+/* BUTTONS */
 
 .buttons {
   display: flex;
@@ -143,9 +195,12 @@ p {
   justify-content: center;
   align-items: center;
 
+  font-family: "Host Grotesk", Arial, sans-serif;
   font-size: clamp(18px, 1.5vw, 24px);
   font-weight: 500;
   text-decoration: none;
+
+  cursor: pointer;
 }
 
 .btn-outline {
@@ -160,13 +215,81 @@ p {
   box-shadow: 0 8px 18px rgba(40, 40, 40, 0.18);
 }
 
+/* FORMULARE */
+
+form {
+  width: 100%;
+  max-width: 360px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form div {
+  width: 100%;
+}
+
+label {
+  display: none;
+}
+
+input {
+  width: 100%;
+  height: clamp(46px, 4vw, 58px);
+
+  border: none;
+  outline: none;
+  border-radius: 999px;
+
+  background-color: var(--grey);
+  color: var(--text);
+
+  font-family: "Host Grotesk", Arial, sans-serif;
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: 500;
+
+  padding: 0 32px;
+  margin-bottom: 16px;
+}
+
+input::placeholder {
+  color: var(--text);
+  opacity: 1;
+}
+
+form button {
+  margin-top: clamp(28px, 5vh, 56px);
+}
+
+/* MOBILE */
+
 @media (max-width: 600px) {
   .page {
     padding: 32px 24px;
   }
 
-  .hero {
+  .hero,
+  .form-card {
     max-width: 330px;
+  }
+
+  .close-button {
+    top: -26px;
+    right: -8px;
+    font-size: 42px;
+  }
+
+  .cloud-circle {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 46px;
+  }
+
+  .form-card .cloud-circle {
+    width: 136px;
+    height: 136px;
+    margin-bottom: 58px;
   }
 
   h1 {
@@ -175,14 +298,38 @@ p {
     letter-spacing: -0.8px;
   }
 
+  .form-card h1 {
+    font-size: 30px;
+    line-height: 1.35;
+    letter-spacing: -0.9px;
+    margin-bottom: 28px;
+  }
+
   p {
     font-size: 12px;
     margin-bottom: 56px;
+  }
+
+  form {
+    max-width: 236px;
+  }
+
+  input {
+    height: 44px;
+    font-size: 14px;
+    padding: 0 28px;
+    margin-bottom: 13px;
   }
 
   .btn {
     width: 170px;
     height: 36px;
     font-size: 18px;
+  }
+
+  .form-card .btn {
+    width: 188px;
+    height: 42px;
+    font-size: 20px;
   }
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -24,4 +24,73 @@
 
     <script src="js/login.js"></script>
   </body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Anmelden</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <main class="page">
+
+    <section class="form-card">
+
+      <a href="index.html" class="close-button">×</a>
+
+      <div class="cloud-circle">
+        <img src="./resources/assets/Wolken_gut.png" alt="Freundliche Wolke">
+      </div>
+
+      <h1>
+  Melde dich bei <br>
+  deinem <span class="blue-text">Konto</span> an.
+</h1>
+
+      <form id="loginForm">
+
+        <input 
+          type="email" 
+          id="email" 
+          placeholder="E-Mail"
+          required
+        />
+
+        <input 
+          type="password" 
+          id="password" 
+          placeholder="Passwort"
+          required
+        />
+
+        <button type="submit" class="btn btn-filled">
+          Anmelden
+          </button>
+
+      </form>
+
+      <p class="form-link">
+        Noch kein Konto? <a href="register.html">Jetzt registrieren</a>
+      </p>
+
+    </section>
+
+  </main>
+
+  <script src="js/login.js"></script>
+
+</body>
 </html>
