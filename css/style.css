@@ -370,3 +370,295 @@ form button.btn-outline {
     font-size: 12px;
   }
 }
+
+//home stuff
+
+/* HOME APP */
+
+.app-page {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--white);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 24px;
+  overflow: hidden;
+}
+
+.home-screen {
+  width: 100%;
+  max-width: 390px;
+  height: 100%;
+  max-height: 840px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+  position: relative;
+  padding: 32px 18px 96px;
+}
+
+.cloud-small {
+  width: 140px;
+  height: 140px;
+
+  border-radius: 50%;
+  background-color: var(--grey);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 12px;
+}
+
+.cloud-small img {
+  width: 78%;
+  height: auto;
+  display: block;
+}
+
+.air-value {
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -1px;
+
+  margin-bottom: 14px;
+}
+
+.status-text {
+  margin-bottom: 16px;
+}
+
+.status-text p {
+  font-size: 19px;
+  line-height: 1.1;
+  font-weight: 800;
+  margin: 0;
+}
+
+.status-text h2 {
+  font-size: 20px;
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.status-good {
+  color: var(--blue);
+}
+
+.status-medium {
+  color: var(--violet);
+}
+
+.status-bad {
+  color: var(--pink);
+}
+
+.room-select-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.room-select {
+  width: 180px;
+  height: 24px;
+
+  border: none;
+  outline: none;
+  border-radius: 999px;
+
+  background-color: var(--grey);
+  color: var(--text);
+
+  font-family: "Host Grotesk", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+
+  padding: 0 18px;
+  cursor: pointer;
+}
+
+.chart-card {
+  width: 100%;
+  background-color: var(--grey);
+  border-radius: 8px;
+
+  padding: 10px 10px 12px;
+  text-align: left;
+
+  margin-bottom: 32px;
+}
+
+.chart-card h2 {
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.chart-placeholder {
+  width: 100%;
+  height: 110px;
+
+  background: linear-gradient(
+    to bottom,
+    #f6a0a4 0%,
+    #f6a0a4 34%,
+    #a88abd 34%,
+    #a88abd 67%,
+    #8db8df 67%,
+    #8db8df 100%
+  );
+
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chart-placeholder canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.info-section {
+  width: 100%;
+  text-align: center;
+}
+
+.info-section h3 {
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.legend {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+}
+
+.legend-box {
+  width: 96px;
+  min-height: 58px;
+
+  border-radius: 7px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 7px 5px;
+
+  font-size: 9px;
+  line-height: 1.15;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.legend-good {
+  background-color: var(--blue);
+}
+
+.legend-medium {
+  background-color: var(--violet);
+}
+
+.legend-bad {
+  background-color: var(--pink);
+}
+
+.bottom-nav {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+
+  height: 56px;
+
+  background-color: var(--grey);
+  border-radius: 999px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-item {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-item img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+/* Desktop leicht grösser, aber wie Mobile-App zentriert */
+
+@media (min-width: 700px) {
+  .home-screen {
+    max-width: 430px;
+  }
+}
+
+/* Mobile Figma nah */
+
+@media (max-width: 600px) {
+  .app-page {
+    padding: 0;
+  }
+
+  .home-screen {
+    max-width: 100%;
+    max-height: none;
+    padding: 34px 32px 94px;
+  }
+
+  .cloud-small {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 14px;
+  }
+
+  .air-value {
+    font-size: 30px;
+    margin-bottom: 16px;
+  }
+
+  .status-text p {
+    font-size: 18px;
+  }
+
+  .status-text h2 {
+    font-size: 18px;
+  }
+
+  .room-select-wrapper {
+    margin-bottom: 36px;
+  }
+
+  .chart-card {
+    margin-bottom: 34px;
+  }
+
+  .bottom-nav {
+    left: 32px;
+    right: 32px;
+    bottom: 24px;
+  }
+}

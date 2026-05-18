@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
   <body>
     <h1>Protected Page</h1>
 
-    <!-- This is where we'll dynamically show the protected content -->
+This is where we'll dynamically show the protected content
     <div id="protectedContent"></div>
 
     <button id="logoutBtn">Logout</button>
@@ -16,4 +16,103 @@
     <script src="js/protected.js"></script>
     <script src="js/logout.js"></script>
   </body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Home</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <main class="app-page">
+
+    <section class="home-screen">
+
+      <div class="cloud-small">
+        <img id="statusCloud" src="./resources/assets/Wolken_gut.png" alt="Luftqualität Status">
+      </div>
+
+      <h1 id="airValue" class="air-value">879</h1>
+
+      <div class="status-text">
+        <p id="statusLabel" class="status-good">Alles gut!</p>
+        <h2 id="statusMessage">Lüften nicht nötig.</h2>
+      </div>
+
+      <div class="room-select-wrapper">
+        <select id="roomSelect" class="room-select">
+          <option value="kinderzimmer">Kinderzimmer</option>
+          <option value="schlafzimmer">Schlafzimmer</option>
+          <option value="wohnzimmer">Wohnzimmer</option>
+        </select>
+      </div>
+
+      <section class="chart-card">
+        <h2>Tagesverlauf</h2>
+
+        <div class="chart-placeholder">
+          <canvas id="airChart"></canvas>
+        </div>
+      </section>
+
+      <section class="info-section">
+        <h3>Was bedeutet diese Zahl?</h3>
+
+        <div class="legend">
+          <div class="legend-box legend-good">
+            &lt; 1000 ppm<br>
+            Sehr gute<br>
+            Luftqualität
+          </div>
+
+          <div class="legend-box legend-medium">
+            1000–1400 ppm<br>
+            Akzeptable<br>
+            Luftqualität
+          </div>
+
+          <div class="legend-box legend-bad">
+            &gt; 1400 ppm<br>
+            Schlechte<br>
+            Luftqualität
+          </div>
+        </div>
+      </section>
+
+      <nav class="bottom-nav">
+        <a href="home.html" class="nav-item">
+          <img src="./resources/assets/menu_home_rosa.png" alt="Home">
+        </a>
+
+        <a href="room.html" class="nav-item">
+          <img src="./resources/assets/menu_rooms.png" alt="Räume">
+        </a>
+
+        <a href="protected.html" class="nav-item">
+          <img src="./resources/assets/menu_profil.png" alt="Profil">
+        </a>
+      </nav>
+
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/chart.js"></script>
+  <script src="js/home.js"></script>
+
+</body>
 </html>
