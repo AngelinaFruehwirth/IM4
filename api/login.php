@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
+
     if (!$email || !$password) {
         echo json_encode(["status" => "error", "message" => "Email and password are required"]);
         exit;

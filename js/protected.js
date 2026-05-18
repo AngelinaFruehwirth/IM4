@@ -14,7 +14,7 @@ async function checkAuth() {
     // Display user data in the protected content div
     const protectedContent = document.getElementById("protectedContent");
     protectedContent.innerHTML = `
-      <h2>Welcome, ${result.email}!</h2>
+      <h2>Welcome, ${result.name}!</h2>
       <p>Your user ID is: ${result.user_id}</p>
     `;
 
