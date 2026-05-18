@@ -1,33 +1,41 @@
 /******************************************************************************************
- * Kap. 13: Sende Sensordaten an Server
+ * Kap. 13: Sende Sensordaten an Server (Erweitert um DHT11 und MQ-135)
  * mc.ino
- * Installiere Library "Arduino_JSON" by Arduino
- * Sensordaten sammeln und per HTTP POST Request an Server schicken (-> an load.php).
- * load.php schreibt die Werte dann in die Datenbank
- * Beachte: Passe den Pfad zur load.php in const char* serverURL auf deinen eigenen an.
- * Gib SSID und Passwort deines WLANs an.
- * Ersetze den Block "Sensor auslesen" durch tatsächliche Sensorwerte.
+ * Installiere Libraries: "Arduino_JSON", "DHT sensor library" by Adafruit
  ******************************************************************************************/
-
-
 
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <Arduino_JSON.h> 
+#include "DHT.h"
 
+// --- Zeitsteuerung ---
 unsigned long lastTime = 0;
-unsigned long timerDelay = 15000;                                  // alle 15s wird ein neuer Wert verschickt
+unsigned long timerDelay = 15000;                                  // Alle 15s wird ein neuer Datensatz verschickt
 
+// --- WLAN & Server Konfiguration ---
 const char* ssid     = "tinkergarden";                             // WLAN SSID
 const char* pass     = "strenggeheim";                             // WLAN Passwort
-const char* serverURL = "https://im4.angelina-fruehwirth.ch>/api/load.php";  // Server-Adresse: hier kann http oder https stehen, aber nicht ohne, zB. https://im4.physco.dorfkneipe.ch/api/load.php
+const char* serverURL = "https://im4.angelina-fruehwirth.ch/api/load.php"; 
 
 bool isWlanConnected = 0;
 int led = LED_BUILTIN;
 
+// --- Sensor Konfiguration ---
+#define DHTPIN 7     
+#define DHTTYPE DHT11           
+DHT dht(DHTPIN, DHTTYPE);
+
+int gasPin = 4;
+
+
 void setup() {
   Serial.begin(115200);
   delay(1000);
+  
+  // Sensoren initialisieren
+  dht.begin();
+  
   pinMode(led, OUTPUT);
   rgbLedWrite(led, 0, 255, 0);                        // GRB: rot
   Serial.println("Starte Verbindung...");
@@ -35,27 +43,41 @@ void setup() {
 }
 
 void loop() {
-  if (!is_wlan_connected())return; 
-  if ((millis() - lastTime) > timerDelay) {           // alle 15 Sekunden...
+  if (!is_wlan_connected()) return; 
+  
+  if ((millis() - lastTime) > timerDelay) {           // Alle 15 Sekunden...
     lastTime = millis();
 
-    ////////////////////////////////////////////////////////////// sensor auslesen
+    ////////////////////////////////////////////////////////////// Sensoren auslesen
 
-    float wert = (float)random(0, 1000) / 10;         // ersetzen durch sensor !! Zunächst zufällige Zahl 0 - 100
-    Serial.println(wert);
+    // DHT11 auslesen
+    float h = dht.readHumidity();       
+    float t = dht.readTemperature();    
+
+    // MQ-135 auslesen
+    int gasWert = analogRead(gasPin);
+
+    // Prüfen, ob das Auslesen des DHT11 geklappt hat
+    if (isnan(h) || isnan(t)) {
+      Serial.println(F("Fehler beim Lesen des DHT-Sensors! Werte werden übersprungen."));
+      return; 
+    }
+
+    // Konsolen-Ausgabe zur Kontrolle
+    Serial.printf("Temp: %.1f°C | Feuchtigkeit: %.1f%% | Gaswert: %d\n", t, h, gasWert);
 
     ////////////////////////////////////////////////////////////// JSON zusammenbauen
 
     JSONVar dataObject;
-    dataObject["wert"] = wert;
+    dataObject["temperatur"] = t;
+    dataObject["luftfeuchtigkeit"] = h;
+    dataObject["gaswert"] = gasWert;
+    
     String jsonString = JSON.stringify(dataObject);
-    // String jsonString = "{\"sensor\":\"fiessling\", \"wert\":77}";  // stattdessen könnte man den JSON string auch so zusammenbauen
 
-  
-     ////////////////////////////////////////////////////////////// JSON string per HTTP POST request an den Server schicken (server2db.php)
+     ////////////////////////////////////////////////////////////// JSON per HTTP POST an den Server schicken
 
-    if (WiFi.status() == WL_CONNECTED) {                // Überprüfen, ob Wi-Fi verbunden ist
-      // HTTP Verbindung starten und POST-Anfrage senden
+    if (WiFi.status() == WL_CONNECTED) {
       HTTPClient http;
       http.begin(serverURL);
       http.addHeader("Content-Type", "application/json");
@@ -79,12 +101,11 @@ void loop() {
 
 
 void connectWiFi(){
-    Serial.printf("\nVerbinde mit WLAN %s", ssid); // ssid ist const char*, kein String(ssid) nötig
+    Serial.printf("\nVerbinde mit WLAN %s", ssid);
     WiFi.begin(ssid, pass);
 
     int attempts = 0;
-    while (WiFi.status() != WL_CONNECTED && attempts < 40)
-    { // Max 20 Versuche (10 Sekunden)
+    while (WiFi.status() != WL_CONNECTED && attempts < 40) {
         delay(500);
         Serial.print(".");
         attempts++;
@@ -92,6 +113,7 @@ void connectWiFi(){
     if (WiFi.status() == WL_CONNECTED){
         Serial.printf("\nWiFi verbunden: SSID: %s, IP-Adresse: %s\n", ssid, WiFi.localIP().toString().c_str());
         rgbLedWrite(led, 255, 0, 0);               // GRB: grün
+        isWlanConnected = 1;
     }
     else{
         Serial.println("\n❌ WiFi Verbindung fehlgeschlagen!");
@@ -100,13 +122,13 @@ void connectWiFi(){
 
 bool is_wlan_connected(){
   if (WiFi.status() != WL_CONNECTED) {
-    if (isWlanConnected == 1) {                     // War vorher verbunden?
+    if (isWlanConnected == 1) {
       Serial.println("WiFi-Verbindung verloren, reconnect...");
       rgbLedWrite(led, 0, 255, 0);                  // GRB: Rot
       isWlanConnected = 0;
     }
     connectWiFi(); 
-    return false;                                   // Loop wird abgebrochen
+    return false;
   }
-  return true;                                      // WiFi ist da, Loop darf weiterlaufen
+  return true;
 }
