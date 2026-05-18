@@ -1,4 +1,6 @@
 /* style.css */
+
+/*
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
@@ -32,4 +34,203 @@ button {
 
 p {
   margin-top: 1em;
+}
+*/
+
+:root {
+    --blue: #709ECF;
+    --violet: #A37DB0;
+    --pink: #F19697;
+    --grey: #EEEEEE;
+    --text: #282828;
+    --white: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100vh;
+}
+
+body {
+    font-family: "Host Grotesk", sans-serif;
+    background-color: var(--grey);
+}
+
+/* Gesamte Seite */
+.page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+/* Card */
+.hero {
+    width: 100%;
+    max-width: 420px;
+    min-height: 760px;
+
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 0px;
+
+    padding:
+        70px
+        40px
+        60px;
+}
+
+/* Kreis */
+.cloud-circle {
+    width: 220px;
+    height: 220px;
+
+    border-radius: 50%;
+    background-color: #E7E7E7;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 60px;
+}
+
+.cloud-circle img {
+    width: 150px;
+    height: auto;
+    display: block;
+}
+
+/* Titel */
+h1 {
+    text-align: center;
+
+    font-size: 56px;
+    line-height: 0.95;
+
+    font-weight: 800;
+
+    color: var(--text);
+
+    letter-spacing: -2px;
+
+    margin-bottom: 24px;
+}
+
+h1 span {
+    color: var(--pink);
+}
+
+/* Text */
+p {
+    text-align: center;
+
+    font-size: 18px;
+    line-height: 1.35;
+
+    color: var(--text);
+
+    margin-bottom: 80px;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    width: 100%;
+    align-items: center;
+}
+
+.btn {
+    width: 260px;
+    height: 54px;
+
+    border-radius: 999px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-decoration: none;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    transition: 0.2s ease;
+}
+
+.btn-outline {
+    border: 1.5px solid var(--pink);
+    color: var(--text);
+    background-color: white;
+}
+
+.btn-filled {
+    background-color: var(--blue);
+    color: white;
+
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+    .hero {
+        min-height: 100vh;
+        max-width: 100%;
+        padding: 60px 28px;
+    }
+
+    .cloud-circle {
+        width: 190px;
+        height: 190px;
+
+        margin-bottom: 48px;
+    }
+
+    .cloud-circle img {
+        width: 130px;
+    }
+
+    h1 {
+        font-size: 28px;
+        line-height: 1.1;
+
+        letter-spacing: -1px;
+
+        margin-bottom: 18px;
+    }
+
+    p {
+        font-size: 14px;
+        margin-bottom: 70px;
+    }
+
+    .btn {
+        width: 210px;
+        height: 46px;
+
+        font-size: 18px;
+    }
 }
