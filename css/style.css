@@ -65,6 +65,8 @@ body {
   background-color: var(--white);
 }
 
+/* GRUNDLAYOUT */
+
 .page {
   width: 100%;
   height: 100vh;
@@ -89,7 +91,7 @@ body {
   align-items: center;
 }
 
-/* FORM SEITEN LOGIN / REGISTER */
+/* LOGIN / REGISTER */
 
 .form-card {
   position: relative;
@@ -104,18 +106,27 @@ body {
 }
 
 .close-button {
-  position: absolute;
-  top: -34px;
-  right: -10px;
+  position: fixed;
+  top: 32px;
+  right: 40px;
+  z-index: 10;
 
-  font-size: clamp(42px, 4vw, 58px);
+  font-size: clamp(38px, 3vw, 54px);
   line-height: 1;
   font-weight: 800;
 
   color: #DDDDDD;
   text-decoration: none;
+  transition: 0.2s ease;
 }
 
+.close-button:hover {
+  opacity: 0.7;
+}
+
+.close-button:hover {
+  opacity: 0.7;
+}
 .blue-text {
   color: var(--blue);
 }
@@ -125,6 +136,7 @@ body {
 .cloud-circle {
   width: clamp(150px, 16vw, 230px);
   height: clamp(150px, 16vw, 230px);
+
   border-radius: 50%;
   background-color: var(--grey);
 
@@ -138,7 +150,7 @@ body {
 .form-card .cloud-circle {
   width: clamp(120px, 12vw, 170px);
   height: clamp(120px, 12vw, 170px);
-  margin-bottom: clamp(48px, 7vh, 70px);
+  margin-bottom: clamp(46px, 6vh, 64px);
 }
 
 .cloud-circle img {
@@ -147,7 +159,7 @@ body {
   display: block;
 }
 
-/* TYPO */
+/* TYPOGRAFIE */
 
 h1 {
   font-size: clamp(32px, 4vw, 64px);
@@ -158,15 +170,15 @@ h1 {
   margin-bottom: clamp(18px, 3vh, 28px);
 }
 
+h1 span {
+  color: var(--pink);
+}
+
 .form-card h1 {
   font-size: clamp(34px, 3.2vw, 52px);
   line-height: 1.18;
   letter-spacing: -1.5px;
-  margin-bottom: clamp(28px, 4vh, 42px);
-}
-
-h1 span {
-  color: var(--pink);
+  margin-bottom: clamp(30px, 4vh, 42px);
 }
 
 p {
@@ -201,7 +213,6 @@ p {
   text-decoration: none;
 
   cursor: pointer;
-
   border: none;
   outline: none;
 }
@@ -265,6 +276,20 @@ form button {
   margin-top: clamp(28px, 5vh, 56px);
 }
 
+form button.btn-outline {
+  margin-top: clamp(30px, 5vh, 52px);
+}
+
+.form-link {
+  margin-top: 24px;
+  margin-bottom: 0;
+  font-size: clamp(14px, 1.2vw, 18px);
+}
+
+.form-link a {
+  color: var(--blue);
+}
+
 /* MOBILE */
 
 @media (max-width: 600px) {
@@ -277,11 +302,11 @@ form button {
     max-width: 330px;
   }
 
-  .close-button {
-    top: -26px;
-    right: -8px;
-    font-size: 42px;
-  }
+ .close-button {
+  top: -26px;
+  right: -8px;
+  font-size: 42px;
+}
 
   .cloud-circle {
     width: 150px;
@@ -334,5 +359,14 @@ form button {
     width: 188px;
     height: 42px;
     font-size: 20px;
+  }
+
+  form button.btn-outline {
+    margin-top: 30px;
+  }
+
+  .form-link {
+    margin-top: 18px;
+    font-size: 12px;
   }
 }
