@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert the new user
-    $insert = $pdo->prepare("INSERT INTO users (email, name, password) VALUES (:email, :name, :pass)");
+    $insert = $pdo->prepare("INSERT INTO users (email, name, password) VALUES (:email, :name, :password)");
     $insert->execute([
         ':email' => $email,
         ':name' => $name,
