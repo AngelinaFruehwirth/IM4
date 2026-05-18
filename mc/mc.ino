@@ -55,7 +55,6 @@ void loop() {
 
   float h = dht.readHumidity();       // Reading temperature or humidity takes about 250 milliseconds!
   float t = dht.readTemperature();    // °C
-  float wert = t;
 
   if (isnan(h) || isnan(t)) {
     Serial.println(F("Failed to read from DHT sensor!"));
@@ -64,13 +63,13 @@ void loop() {
 
 
     // float wert = (float)random(0, 1000) / 10;         // ersetzen durch sensor !! Zunächst zufällige Zahl 0 - 100
-    Serial.println(wert);
+    Serial.println(t);
 
     ////////////////////////////////////////////////////////////// JSON zusammenbauen
 
    JSONVar dataObject;
     dataObject["sensor"] = "DHT11_Sensor"; // Oder ein beliebiger Name
-    dataObject["wert"] = wert;
+    dataObject["t"] = t;
     String jsonString = JSON.stringify(dataObject);
     // String jsonString = "{\"sensor\":\"fiessling\", \"wert\":77}";  // stattdessen könnte man den JSON string auch so zusammenbauen
 
