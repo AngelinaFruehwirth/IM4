@@ -201,6 +201,9 @@ p {
   text-decoration: none;
 
   cursor: pointer;
+
+  border: none;
+  outline: none;
 }
 
 .btn-outline {
