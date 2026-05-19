@@ -34,7 +34,7 @@ DHT dht(DHTPIN, DHTTYPE);
 
 // --- SENSOR 2: MQ-135 (Gassensor / CO2) ---
 // Falls ihr den AO-Pin an einen anderen GPIO angeschlossen habt, hier die Zahl ändern!
-#define MQ135_PIN 18
+#define MQ135_PIN 4
 
 void setup() {
   Serial.begin(115200);
@@ -108,7 +108,7 @@ void loop() {
     dataObject["co2"]    = co2;           
     
     String jsonString = JSON.stringify(dataObject);
-    Serial.print("Sende JSON (jetzt ohne sensor-Feld): ");
+    Serial.print("Sende JSON an Server (jetzt ohne sensor-Feld): ");
     Serial.println(jsonString);
 
      ////////////////////////////////////////////////////////////// JSON string per HTTP POST request an den Server schicken (server2db.php)
