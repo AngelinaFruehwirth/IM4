@@ -89,17 +89,27 @@ void loop() {
     //String jsonString = JSON.stringify(dataObject);
     // String jsonString = "{\"sensor\":\"fiessling\", \"wert\":77}";  // stattdessen könnte man den JSON string auch so zusammenbauen
 
+    //JSONVar dataObject;
+    //dataObject["sensor"] = "DHT11_MQ135_Node"; // Name eurer Station
+    //dataObject["temp"]   = temp;
+    //dataObject["hum"]    = hum;
+    //dataObject["co2"]    = co2;           // HIER ERGÄNZT: Gaswert wird ins JSON gepackt!
+    
+   // String jsonString = JSON.stringify(dataObject);
+   // Serial.print("Sende JSON: ");
+   // Serial.println(jsonString);
+  
+////////////////////////////////////////////////////////////// JSON zusammenbauen
+
     JSONVar dataObject;
-    dataObject["sensor"] = "DHT11_MQ135_Node"; // Name eurer Station
+    // HIER GEÄNDERT: Wir löschen das dataObject["sensor"], da die load.php es nicht erwartet!
     dataObject["temp"]   = temp;
     dataObject["hum"]    = hum;
-    dataObject["co2"]    = co2;           // HIER ERGÄNZT: Gaswert wird ins JSON gepackt!
+    dataObject["co2"]    = co2;           
     
     String jsonString = JSON.stringify(dataObject);
-    Serial.print("Sende JSON: ");
+    Serial.print("Sende JSON (jetzt ohne sensor-Feld): ");
     Serial.println(jsonString);
-  
-
 
      ////////////////////////////////////////////////////////////// JSON string per HTTP POST request an den Server schicken (server2db.php)
 
