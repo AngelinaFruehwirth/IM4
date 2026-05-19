@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Profil</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <main class="app-page">
+    <section class="profile-screen">
+
+      <div class="cloud-small profile-cloud">
+        <img src="./resources/assets/Wolken_gut_login.png" alt="Profil Wolke">
+      </div>
+
+      <h1 class="profile-title">
+        Hallo <span id="profileName">...</span>
+      </h1>
+
+      <div class="profile-actions">
+        <button class="profile-input-btn" id="changeNameBtn">
+          Name ändern
+        </button>
+
+        <button class="profile-input-btn" id="changePasswordBtn">
+          Passwort ändern
+        </button>
+      </div>
+
+      <button class="btn btn-filled profile-logout" id="logoutBtn">
+        Ausloggen
+      </button>
+
+      <nav class="bottom-nav">
+        <a href="home.html" class="nav-item">
+          <img src="./resources/assets/menu_home.png" alt="Home">
+        </a>
+
+        <a href="room.html" class="nav-item">
+          <img src="./resources/assets/menu_rooms.png" alt="Räume">
+        </a>
+
+        <a href="profil.html" class="nav-item">
+          <img src="./resources/assets/menu_profil_rosa.png" alt="Profil">
+        </a>
+      </nav>
+
+    </section>
+  </main>
+
+  <script src="js/profil.js"></script>
+
+</body>
+</html>
