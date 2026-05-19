@@ -19,17 +19,19 @@ try {
             r.id AS room_id,
             r.name AS room_name,
             s.id AS sensor_id,
-            m.ppm,
-            m.zeit
+            sd.co2,
+            sd.temp,
+            sd.hum,
+            sd.zeit
         FROM Raeume r
         LEFT JOIN Sensoren s 
             ON s.raum_id = r.id
-        LEFT JOIN Messwerte m 
-            ON m.sensor_id = s.id
-            AND m.zeit = (
-                SELECT MAX(m2.zeit)
-                FROM Messwerte m2
-                WHERE m2.sensor_id = s.id
+        LEFT JOIN sensordata sd 
+            ON sd.sensor_id = s.id
+            AND sd.zeit = (
+                SELECT MAX(sd2.zeit)
+                FROM sensordata sd2
+                WHERE sd2.sensor_id = s.id
             )
         WHERE r.user_id = :user_id
         ORDER BY r.name ASC

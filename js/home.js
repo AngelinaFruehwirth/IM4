@@ -81,19 +81,23 @@ function updateRoomDisplay(roomId) {
     (room) => String(room.room_id) === String(roomId)
   );
 
-  if (!selectedRoom || selectedRoom.ppm === null) {
+  if (!selectedRoom) {
     showNoData();
     return;
   }
 
-  const ppm = Number(selectedRoom.ppm);
+  const co2 = Number(selectedRoom.co2);
+  const temp = Number(selectedRoom.temp);
+  const hum = Number(selectedRoom.hum);
 
-  if (Number.isNaN(ppm)) {
+  if (Number.isNaN(co2)) {
     showNoData();
     return;
   }
 
-  updateAirQuality(ppm);
+  updateAirQuality(co2);
+  updateTemperature(temp);
+  updateHumidity(hum);
 }
 
 function updateAirQuality(value) {
@@ -124,6 +128,26 @@ function updateAirQuality(value) {
   }
 }
 
+function updateTemperature(value) {
+  const temperatureValue = document.getElementById("temperatureValue");
+
+  if (!temperatureValue) return;
+
+  temperatureValue.textContent = Number.isNaN(value)
+    ? "--°"
+    : `${Math.round(value)}°`;
+}
+
+function updateHumidity(value) {
+  const humidityValue = document.getElementById("humidityValue");
+
+  if (!humidityValue) return;
+
+  humidityValue.textContent = Number.isNaN(value)
+    ? "--%"
+    : `${Math.round(value)}%`;
+}
+
 function showNoData() {
   const airValue = document.getElementById("airValue");
   const statusCloud = document.getElementById("statusCloud");
@@ -138,6 +162,9 @@ function showNoData() {
 
   statusLabel.textContent = "Keine Daten";
   statusMessage.textContent = "Noch keine Messung vorhanden.";
+
+  updateTemperature(NaN);
+  updateHumidity(NaN);
 }
 
 window.addEventListener("load", async () => {

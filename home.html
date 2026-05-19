@@ -17,18 +17,10 @@
 <body>
 
   <main class="app-page">
-
     <section class="home-screen">
 
       <div class="cloud-small">
         <img id="statusCloud" src="./resources/assets/Wolken_mittel.png" alt="Luftqualität Status">
-      </div>
-
-      <h1 id="airValue" class="air-value">--</h1>
-
-      <div class="status-text">
-        <p id="statusLabel" class="status-medium">Lädt...</p>
-        <h2 id="statusMessage">Messwerte werden geladen.</h2>
       </div>
 
       <div class="room-select-wrapper">
@@ -37,8 +29,29 @@
         </select>
       </div>
 
+      <h1 id="airValue" class="air-value">--</h1>
+
+      <p class="air-label">Aktuelle Luftqualität</p>
+
+      <div class="status-text">
+        <p id="statusLabel" class="status-medium">Lädt...</p>
+        <h2 id="statusMessage">Messwerte werden geladen.</h2>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric-box">
+          <strong id="temperatureValue">--°</strong>
+          <span>Aktuelle Temperatur</span>
+        </div>
+
+        <div class="metric-box">
+          <strong id="humidityValue">--%</strong>
+          <span>Aktuelle Luftfeuchtigkeit</span>
+        </div>
+      </div>
+
       <section class="chart-card">
-        <h2>Tagesverlauf</h2>
+        <h2>Tagesverlauf Luftqualität</h2>
 
         <div class="chart-placeholder">
           <canvas id="airChart"></canvas>
@@ -84,7 +97,6 @@
       </nav>
 
     </section>
-
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
