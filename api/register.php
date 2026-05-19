@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $insert->execute([
         ':email' => $email,
         ':name' => $name,
-        ':pass'  => $hashedPassword
+        ':password'  => $hashedPassword
     ]);
 
     echo json_encode(["status" => "success"]);
