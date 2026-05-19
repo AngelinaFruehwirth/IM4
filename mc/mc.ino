@@ -13,6 +13,7 @@
 
 #include <WiFi.h>
 #include <HTTPClient.h>
+#include <Adafruit_NeoPixel.h>
 #include <Arduino_JSON.h> 
 
 unsigned long lastTime = 0;
@@ -25,6 +26,10 @@ const char* serverURL = "https://im4.angelina-fruehwirth.ch/api/load.php";  // S
 bool isWlanConnected = 0;
 int led = LED_BUILTIN;
 
+// --- LED RING SETUP ---
+#define LED_PIN        5   // Datenleitung des LED-Rings an GPIO 5 anschließen
+#define NUMPIXELS     12   // HIER ANPASSEN: Anzahl der LEDs auf eurem Ring (z.B. 8, 12, 16 oder 24)
+Adafruit_NeoPixel ring(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // Temperatur Sensor
 #include "DHT.h"
@@ -79,6 +84,38 @@ void loop() {
     Serial.print("% | co2: ");
     Serial.print(co2);
     Serial.println(); // Zeilenumbruch
+
+
+    // 2. AMPEL-LOGIK FÜR DEN LED-RING
+    // ==========================================
+    int r = 0, g = 0, b = 0; // Variablen für Rot, Grün, Blau
+
+    // REGEL 1: Lila Warnung (Temperatur oder Feuchtigkeit ausserhalb des Limits)
+    if (hum < 25.0 || hum > 65.0 || temp < 15.0 || temp > 28.0) {
+      r = 128; g = 0; b = 128; // Lila
+      Serial.println("Ampel: LILA (Warnung: Temp/Hum außerhalb des Limits!)");
+    }
+    // REGEL 2: Rot (CO2 ab 1600)
+    else if (co2 >= 1600) {
+      r = 255; g = 0; b = 0;   // Rot
+      Serial.println("Ampel: ROT (Lüften zwingend nötig!)");
+    }
+    // REGEL 3: Gelb (CO2 ab 1000 bis 1599)
+    else if (co2 >= 1000) {
+      r = 255; g = 150; b = 0; // Gelb/Orange
+      Serial.println("Ampel: GELB (Lüften empfohlen!)");
+    }
+    // REGEL 4: Grün (CO2 bis 999)
+    else {
+      r = 0; g = 255; b = 0;   // Grün
+      Serial.println("Ampel: GRÜN (Gute Luftqualität)");
+    }
+
+    // Die ermittelte Farbe auf alle LEDs des Rings übertragen
+    for(int i=0; i<NUMPIXELS; i++) {
+      ring.setPixelColor(i, ring.Color(r, g, b));
+    }
+    ring.show(); // Ring aktualisieren, damit er leuchtet
 
     ////////////////////////////////////////////////////////////// JSON zusammenbauen
 
