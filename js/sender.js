@@ -13,7 +13,9 @@ form.addEventListener("submit", async (event) => {
   // Daten aus dem Formular holen
   const formData = new FormData(event.target);
   const dataObject = {
-    wert: formData.get("wert"),
+    temp: formData.get("temp"), 
+    hum: formData.get("hum"),
+    co2: formData.get("co2")
   };
 
   // Daten als JSON string formattieren

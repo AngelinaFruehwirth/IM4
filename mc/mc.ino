@@ -32,6 +32,9 @@ int led = LED_BUILTIN;
 #define DHTTYPE DHT11           
 DHT dht(DHTPIN, DHTTYPE);
 
+// --- SENSOR 2: MQ-135 (Gassensor / CO2) ---
+// Falls ihr den AO-Pin an einen anderen GPIO angeschlossen habt, hier die Zahl ändern!
+#define MQ135_PIN 18
 
 void setup() {
   Serial.begin(115200);
@@ -43,7 +46,8 @@ void setup() {
 
   // Temperatur Sensor
   dht.begin();
-
+// Analoge Pins müssen nicht zwingend mit pinMode definiert werden, schadet aber nicht:
+  pinMode(MQ135_PIN, INPUT);
 }
 
 void loop() {
@@ -53,27 +57,60 @@ void loop() {
 
     ////////////////////////////////////////////////////////////// sensor auslesen
 
-  float h = dht.readHumidity();       // Reading temperature or humidity takes about 250 milliseconds!
-  float t = dht.readTemperature();    // °C
+  float hum = dht.readHumidity();       // Reading temperature or humidity takes about 250 milliseconds!
+  float temp = dht.readTemperature();    // °C
 
-  if (isnan(h) || isnan(t)) {
+// MQ-135 auslesen (Liefert einen Wert zwischen 0 und 4095 beim ESP32)
+    int co2 = analogRead(MQ135_PIN);
+
+  if (isnan(hum) || isnan(temp)) {
     Serial.println(F("Failed to read from DHT sensor!"));
     return;
   }
 
-
     // float wert = (float)random(0, 1000) / 10;         // ersetzen durch sensor !! Zunächst zufällige Zahl 0 - 100
-    Serial.println(t);
+    // Serial.println(temp);
+   //  Serial.println(hum);
+
+    Serial.print("temp: ");
+    Serial.print(temp, 1); // 1 Nachkommastelle
+    Serial.print("°C | hum: ");
+    Serial.print(hum, 1);
+    Serial.print("% | co2: ");
+    Serial.print(co2);
+    Serial.println(); // Zeilenumbruch
 
     ////////////////////////////////////////////////////////////// JSON zusammenbauen
 
-   JSONVar dataObject;
-    dataObject["sensor"] = "DHT11_Sensor"; // Oder ein beliebiger Name
-    dataObject["t"] = t;
-    String jsonString = JSON.stringify(dataObject);
+   //JSONVar dataObject;
+    //dataObject["sensor"] = "DHT11_Sensor"; // Oder ein beliebiger Name
+    //dataObject["temp"] = temp;
+    //dataObject["hum"] = hum;
+    //String jsonString = JSON.stringify(dataObject);
     // String jsonString = "{\"sensor\":\"fiessling\", \"wert\":77}";  // stattdessen könnte man den JSON string auch so zusammenbauen
 
+    //JSONVar dataObject;
+    //dataObject["sensor"] = "DHT11_MQ135_Node"; // Name eurer Station
+    //dataObject["temp"]   = temp;
+    //dataObject["hum"]    = hum;
+    //dataObject["co2"]    = co2;           // HIER ERGÄNZT: Gaswert wird ins JSON gepackt!
+    
+   // String jsonString = JSON.stringify(dataObject);
+   // Serial.print("Sende JSON: ");
+   // Serial.println(jsonString);
   
+////////////////////////////////////////////////////////////// JSON zusammenbauen
+
+    JSONVar dataObject;
+    // HIER GEÄNDERT: Wir löschen das dataObject["sensor"], da die load.php es nicht erwartet!
+    dataObject["temp"]   = temp;
+    dataObject["hum"]    = hum;
+    dataObject["co2"]    = co2;           
+    
+    String jsonString = JSON.stringify(dataObject);
+    Serial.print("Sende JSON (jetzt ohne sensor-Feld): ");
+    Serial.println(jsonString);
+
      ////////////////////////////////////////////////////////////// JSON string per HTTP POST request an den Server schicken (server2db.php)
 
     if (WiFi.status() == WL_CONNECTED) {                // Überprüfen, ob Wi-Fi verbunden ist
