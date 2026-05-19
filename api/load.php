@@ -24,14 +24,15 @@ $input = json_decode($inputJSON, true);
 // Werte aus dem decodierten json auslesen
 $temp = $input["temp"];         
 $hum  = $input["hum"];
+$co2  = $input["co2"];
 
 
 // SQL-Query anpassen: Spaltennamen und Platzhalter (?) erweitern
-$sql = "INSERT INTO sensordata (temp, hum) VALUES (?, ?)";
+$sql = "INSERT INTO sensordata (temp, hum, co2) VALUES (?, ?, ?)";
 $stmt = $pdo->prepare($sql);
 
 
 // beide Variabeln als Array übergeben
-$stmt->execute([$temp, $hum]);
+$stmt->execute([$temp, $hum, $co2]);
 
 ?>
