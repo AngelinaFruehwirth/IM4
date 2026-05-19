@@ -64,12 +64,14 @@ void loop() {
 
     // float wert = (float)random(0, 1000) / 10;         // ersetzen durch sensor !! Zunächst zufällige Zahl 0 - 100
     Serial.println(temp);
+    Serial.println(hum);
 
     ////////////////////////////////////////////////////////////// JSON zusammenbauen
 
    JSONVar dataObject;
     dataObject["sensor"] = "DHT11_Sensor"; // Oder ein beliebiger Name
     dataObject["temp"] = temp;
+    dataObject["hum"] = hum;
     String jsonString = JSON.stringify(dataObject);
     // String jsonString = "{\"sensor\":\"fiessling\", \"wert\":77}";  // stattdessen könnte man den JSON string auch so zusammenbauen
 
