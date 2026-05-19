@@ -54,6 +54,34 @@ async function loadRooms() {
   }
 }
 
+async function loadChart(roomId) {
+  try {
+    const response = await fetch(`api/chart.php?room_id=${roomId}`, {
+      credentials: "include",
+    });
+
+    if (response.status === 401) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error("Chartdaten konnten nicht geladen werden.");
+    }
+
+    const data = await response.json();
+
+    if (data.status === "success") {
+      renderAirChart(data.history || []);
+    } else {
+      renderAirChart([]);
+    }
+  } catch (error) {
+    console.error("Chart loading failed:", error);
+    renderAirChart([]);
+  }
+}
+
 function fillRoomDropdown() {
   const roomSelect = document.getElementById("roomSelect");
 
@@ -98,6 +126,7 @@ function updateRoomDisplay(roomId) {
   updateAirQuality(co2);
   updateTemperature(temp);
   updateHumidity(hum);
+  loadChart(roomId);
 }
 
 function updateAirQuality(value) {
@@ -108,22 +137,26 @@ function updateAirQuality(value) {
 
   airValue.textContent = Math.round(value);
 
+  airValue.classList.remove("air-good", "air-medium", "air-bad");
   statusLabel.classList.remove("status-good", "status-medium", "status-bad");
 
   if (value < 1000) {
     statusCloud.src = "./resources/assets/Wolken_gut.png";
     statusLabel.textContent = "Alles gut!";
     statusLabel.classList.add("status-good");
+    airValue.classList.add("air-good");
     statusMessage.textContent = "Lüften nicht nötig.";
   } else if (value <= 1400) {
     statusCloud.src = "./resources/assets/Wolken_mittel.png";
     statusLabel.textContent = "Eher kritisch!";
     statusLabel.classList.add("status-medium");
+    airValue.classList.add("air-medium");
     statusMessage.textContent = "Lüften empfohlen.";
   } else {
     statusCloud.src = "./resources/assets/Wolken_schlecht.png";
     statusLabel.textContent = "Nicht gut!";
     statusLabel.classList.add("status-bad");
+    airValue.classList.add("air-bad");
     statusMessage.textContent = "Bitte schnell lüften.";
   }
 }
@@ -155,6 +188,9 @@ function showNoData() {
   const statusMessage = document.getElementById("statusMessage");
 
   airValue.textContent = "--";
+  airValue.classList.remove("air-good", "air-medium", "air-bad");
+  airValue.classList.add("air-medium");
+
   statusCloud.src = "./resources/assets/Wolken_mittel.png";
 
   statusLabel.classList.remove("status-good", "status-medium", "status-bad");
@@ -165,6 +201,7 @@ function showNoData() {
 
   updateTemperature(NaN);
   updateHumidity(NaN);
+  renderAirChart([]);
 }
 
 window.addEventListener("load", async () => {
