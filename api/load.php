@@ -20,10 +20,18 @@ $input = json_decode($inputJSON, true);
 
 ###################################### receiving a post request from a HTML form, later from ESP
 
-$wert = $input["temp"];         // Hol den Wert an der Stelle "wert" aus dem JS-Objekt (ehemals JSON-String)
-# insert new user into db
-$sql = "INSERT INTO sensordata (temp) VALUES (?)";
+
+// Werte aus dem decodierten json auslesen
+$temp = $input["temp"];         
+$hum  = $input["hum"];
+
+
+// SQL-Query anpassen: Spaltennamen und Platzhalter (?) erweitern
+$sql = "INSERT INTO sensordata (temp, hum) VALUES (?, ?)";
 $stmt = $pdo->prepare($sql);
-$stmt->execute([$wert]);
+
+
+// beide Variabeln als Array übergeben
+$stmt->execute([$temp, $hum]);
 
 ?>
