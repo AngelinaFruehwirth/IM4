@@ -1,20 +1,103 @@
+let rooms = [];
+
 async function checkAuth() {
   try {
-    const response = await fetch("/api/protected.php", {
+    const response = await fetch("api/protected.php", {
       credentials: "include",
     });
 
     if (response.status === 401) {
-      window.location.href = "/login.html";
+      window.location.href = "login.html";
       return false;
+    }
+
+    if (!response.ok) {
+      throw new Error("Auth check failed");
     }
 
     return true;
   } catch (error) {
     console.error("Auth check failed:", error);
-    window.location.href = "/login.html";
+    window.location.href = "login.html";
     return false;
   }
+}
+
+async function loadRooms() {
+  try {
+    const response = await fetch("api/home.php", {
+      credentials: "include",
+    });
+
+    if (response.status === 401) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error("Räume konnten nicht geladen werden.");
+    }
+
+    const data = await response.json();
+    rooms = data.rooms || [];
+
+    fillRoomDropdown();
+
+    if (rooms.length > 0) {
+      updateRoomDisplay(rooms[0].room_id);
+    } else {
+      showNoData();
+    }
+  } catch (error) {
+    console.error("Fehler beim Laden der Räume:", error);
+    showNoData();
+  }
+}
+
+function fillRoomDropdown() {
+  const roomSelect = document.getElementById("roomSelect");
+
+  roomSelect.innerHTML = "";
+
+  if (rooms.length === 0) {
+    roomSelect.innerHTML = `<option value="">Keine Räume</option>`;
+    return;
+  }
+
+  rooms.forEach((room) => {
+    const option = document.createElement("option");
+    option.value = room.room_id;
+    option.textContent = room.room_name;
+    roomSelect.appendChild(option);
+  });
+
+  roomSelect.onchange = () => {
+    updateRoomDisplay(roomSelect.value);
+  };
+}
+
+function updateRoomDisplay(roomId) {
+  const selectedRoom = rooms.find(
+    (room) => String(room.room_id) === String(roomId)
+  );
+
+  if (!selectedRoom) {
+    showNoData();
+    return;
+  }
+
+  const co2 = Number(selectedRoom.co2);
+  const temp = Number(selectedRoom.temp);
+  const hum = Number(selectedRoom.hum);
+
+  if (Number.isNaN(co2)) {
+    showNoData();
+    return;
+  }
+
+  updateAirQuality(co2);
+  updateTemperature(temp);
+  updateHumidity(hum);
 }
 
 function updateAirQuality(value) {
@@ -23,7 +106,7 @@ function updateAirQuality(value) {
   const statusLabel = document.getElementById("statusLabel");
   const statusMessage = document.getElementById("statusMessage");
 
-  airValue.textContent = value;
+  airValue.textContent = Math.round(value);
 
   statusLabel.classList.remove("status-good", "status-medium", "status-bad");
 
@@ -34,35 +117,54 @@ function updateAirQuality(value) {
     statusMessage.textContent = "Lüften nicht nötig.";
   } else if (value <= 1400) {
     statusCloud.src = "./resources/assets/Wolken_mittel.png";
-    statusLabel.textContent = "Eher Kritisch!";
+    statusLabel.textContent = "Eher kritisch!";
     statusLabel.classList.add("status-medium");
     statusMessage.textContent = "Lüften empfohlen.";
   } else {
     statusCloud.src = "./resources/assets/Wolken_schlecht.png";
     statusLabel.textContent = "Nicht gut!";
     statusLabel.classList.add("status-bad");
-    statusMessage.textContent = "Bitte schnell Lüften.";
+    statusMessage.textContent = "Bitte schnell lüften.";
   }
 }
 
-function setupRoomDropdown() {
-  const roomSelect = document.getElementById("roomSelect");
+function updateTemperature(value) {
+  const temperatureValue = document.getElementById("temperatureValue");
 
-  roomSelect.addEventListener("change", () => {
-    const selectedRoom = roomSelect.value;
+  if (!temperatureValue) return;
 
-    if (selectedRoom === "kinderzimmer") {
-      updateAirQuality(879);
-    }
+  temperatureValue.textContent = Number.isNaN(value)
+    ? "--°"
+    : `${Math.round(value)}°`;
+}
 
-    if (selectedRoom === "schlafzimmer") {
-      updateAirQuality(1345);
-    }
+function updateHumidity(value) {
+  const humidityValue = document.getElementById("humidityValue");
 
-    if (selectedRoom === "wohnzimmer") {
-      updateAirQuality(1567);
-    }
-  });
+  if (!humidityValue) return;
+
+  humidityValue.textContent = Number.isNaN(value)
+    ? "--%"
+    : `${Math.round(value)}%`;
+}
+
+function showNoData() {
+  const airValue = document.getElementById("airValue");
+  const statusCloud = document.getElementById("statusCloud");
+  const statusLabel = document.getElementById("statusLabel");
+  const statusMessage = document.getElementById("statusMessage");
+
+  airValue.textContent = "--";
+  statusCloud.src = "./resources/assets/Wolken_mittel.png";
+
+  statusLabel.classList.remove("status-good", "status-medium", "status-bad");
+  statusLabel.classList.add("status-medium");
+
+  statusLabel.textContent = "Keine Daten";
+  statusMessage.textContent = "Noch keine Messung vorhanden.";
+
+  updateTemperature(NaN);
+  updateHumidity(NaN);
 }
 
 window.addEventListener("load", async () => {
@@ -70,6 +172,5 @@ window.addEventListener("load", async () => {
 
   if (!isAuthenticated) return;
 
-  updateAirQuality(879);
-  setupRoomDropdown();
+  await loadRooms();
 });
