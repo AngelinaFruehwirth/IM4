@@ -19,49 +19,108 @@
   <main class="app-page">
     <section class="home-screen">
 
-      <div class="cloud-small">
-        <img id="statusCloud" src="./resources/assets/Wolken_mittel.png" alt="Luftqualität Status">
+      <!-- TOP SECTION -->
+      <div class="top-air-section">
+
+        <!-- CLOUD -->
+        <div class="cloud-small">
+          <img 
+            id="statusCloud"
+            src="./resources/assets/Wolken_mittel.png"
+            alt="Luftqualität Status"
+          >
+        </div>
+
+        <!-- AIR VALUE -->
+        <div class="air-wrapper">
+
+         <div class="air-value-wrapper">
+
+        <h1 id="airValue" class="air-value air-medium">
+          --
+        </h1>
+
+        <span class="ppm-label">
+          ppm
+        </span>
+
       </div>
 
+          <p class="air-label">
+            Aktuelle Luftqualität
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- STATUS -->
+      <div class="status-text">
+        <p id="statusLabel" class="status-medium">
+          Lädt...
+        </p>
+
+        <h2 id="statusMessage">
+          Messwerte werden geladen.
+        </h2>
+      </div>
+
+      <!-- ROOM SELECT -->
       <div class="room-select-wrapper">
         <select id="roomSelect" class="room-select">
-          <option value="">Lädt Räume...</option>
+          <option value="">
+            Lädt Räume...
+          </option>
         </select>
       </div>
 
-      <h1 id="airValue" class="air-value">--</h1>
-
-      <p class="air-label">Aktuelle Luftqualität</p>
-
-      <div class="status-text">
-        <p id="statusLabel" class="status-medium">Lädt...</p>
-        <h2 id="statusMessage">Messwerte werden geladen.</h2>
-      </div>
-
+      <!-- TEMPERATURE + HUMIDITY -->
       <div class="metric-row">
+
         <div class="metric-box">
-          <strong id="temperatureValue">--°</strong>
-          <span>Aktuelle Temperatur</span>
+          <strong id="temperatureValue">
+            --°
+          </strong>
+
+          <span>
+            Aktuelle Temperatur
+          </span>
         </div>
 
         <div class="metric-box">
-          <strong id="humidityValue">--%</strong>
-          <span>Aktuelle Luftfeuchtigkeit</span>
+          <strong id="humidityValue">
+            --%
+          </strong>
+
+          <span>
+            Aktuelle Luftfeuchtigkeit
+          </span>
         </div>
+
       </div>
 
+      <!-- CHART -->
       <section class="chart-card">
-        <h2>Tagesverlauf Luftqualität</h2>
+
+        <h2>
+          Tagesverlauf Luftqualität
+        </h2>
 
         <div class="chart-placeholder">
           <canvas id="airChart"></canvas>
         </div>
+
       </section>
 
+      <!-- LEGEND -->
       <section class="info-section">
-        <h3>Was bedeutet diese Zahl?</h3>
+
+        <h3>
+          Was bedeutet diese Zahl?
+        </h3>
 
         <div class="legend">
+
           <div class="legend-box legend-good">
             &lt; 1000 ppm<br>
             Sehr gute<br>
@@ -79,21 +138,35 @@
             Schlechte<br>
             Luftqualität
           </div>
+
         </div>
+
       </section>
 
+      <!-- BOTTOM NAV -->
       <nav class="bottom-nav">
+
         <a href="home.html" class="nav-item">
-          <img src="./resources/assets/menu_home_rosa.png" alt="Home">
+          <img 
+            src="./resources/assets/menu_home_rosa.png"
+            alt="Home"
+          >
         </a>
 
         <a href="room.html" class="nav-item">
-          <img src="./resources/assets/menu_rooms.png" alt="Räume">
+          <img 
+            src="./resources/assets/menu_rooms.png"
+            alt="Räume"
+          >
         </a>
 
         <a href="profil.html" class="nav-item">
-          <img src="./resources/assets/menu_profil.png" alt="Profil">
+          <img 
+            src="./resources/assets/menu_profil.png"
+            alt="Profil"
+          >
         </a>
+
       </nav>
 
     </section>
