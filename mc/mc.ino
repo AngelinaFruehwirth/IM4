@@ -19,8 +19,8 @@
 unsigned long lastTime = 0;
 unsigned long timerDelay = 15000;                                  // alle 15s wird ein neuer Wert verschickt
 
-const char* ssid     = "tinkergarden";                             // WLAN SSID
-const char* pass     = "strenggeheim";                             // WLAN Passwort
+const char* ssid     = "Alpha-Härdöpfu";                             // WLAN SSID
+const char* pass     = "Rainbowkid_20";                             // WLAN Passwort
 const char* serverURL = "https://im4.angelina-fruehwirth.ch/api/load.php";  // Server-Adresse: hier kann http oder https stehen, aber nicht ohne, zB. https://im4.physco.dorfkneipe.ch/api/load.php
 
 bool isWlanConnected = 0;
