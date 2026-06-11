@@ -6,10 +6,8 @@
  * Datenbank-Verbindung
 **************************/
 
-
 require_once("../system/config.php");
 // echo "This script receives HTTP POST messages and pushes their content into the database.";
-
 
 
 ###################################### Empfangen der JSON-Daten
@@ -21,18 +19,20 @@ $input = json_decode($inputJSON, true);
 ###################################### receiving a post request from a HTML form, later from ESP
 
 
-// Werte aus dem decodierten json auslesen
-$temp = $input["temp"];         
-$hum  = $input["hum"];
-$co2  = $input["co2"];
+// Werte aus dem decodierten json auslesen (Inklusive der neuen sensor_id)
+$sensor_id = $input["sensor_id"];
+$temp      = $input["temp"];         
+$hum       = $input["hum"];
+$co2       = $input["co2"];
 
 
-// SQL-Query anpassen: Spaltennamen und Platzhalter (?) erweitern
-$sql = "INSERT INTO sensordata (temp, hum, co2) VALUES (?, ?, ?)";
+// SQL-Query anpassen: Spaltennamen und Platzhalter (?) um sensor_id erweitern
+$sql = "INSERT INTO sensordata (sensor_id, temp, hum, co2) VALUES (?, ?, ?, ?)";
 $stmt = $pdo->prepare($sql);
 
 
-// beide Variabeln als Array übergeben
-$stmt->execute([$temp, $hum, $co2]);
+// Alle Variablen als Array in der exakten Reihenfolge der Fragezeichen übergeben
+$stmt->execute([$sensor_id, $temp, $hum, $co2]);
 
+echo "Daten erfolgreich für Sensor-ID " . $sensor_id . " gespeichert.";
 ?>

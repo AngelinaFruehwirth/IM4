@@ -22,6 +22,7 @@ unsigned long timerDelay = 15000;                                  // alle 15s w
 const char* ssid     = "Alpha-Härdöpfu";                             // WLAN SSID
 const char* pass     = "Rainbowkid_20";                             // WLAN Passwort
 const char* serverURL = "https://im4.angelina-fruehwirth.ch/api/load.php";  // Server-Adresse: hier kann http oder https stehen, aber nicht ohne, zB. https://im4.physco.dorfkneipe.ch/api/load.php
+const int SENSOR_ID = 1;
 
 bool isWlanConnected = 0;
 int led = LED_BUILTIN;
@@ -117,35 +118,23 @@ void loop() {
     }
     ring.show(); // Ring aktualisieren, damit er leuchtet
 
-    ////////////////////////////////////////////////////////////// JSON zusammenbauen
-
-   //JSONVar dataObject;
-    //dataObject["sensor"] = "DHT11_Sensor"; // Oder ein beliebiger Name
-    //dataObject["temp"] = temp;
-    //dataObject["hum"] = hum;
-    //String jsonString = JSON.stringify(dataObject);
-    // String jsonString = "{\"sensor\":\"fiessling\", \"wert\":77}";  // stattdessen könnte man den JSON string auch so zusammenbauen
-
-    //JSONVar dataObject;
-    //dataObject["sensor"] = "DHT11_MQ135_Node"; // Name eurer Station
-    //dataObject["temp"]   = temp;
-    //dataObject["hum"]    = hum;
-    //dataObject["co2"]    = co2;           // HIER ERGÄNZT: Gaswert wird ins JSON gepackt!
-    
-   // String jsonString = JSON.stringify(dataObject);
-   // Serial.print("Sende JSON: ");
-   // Serial.println(jsonString);
   
 ////////////////////////////////////////////////////////////// JSON zusammenbauen
 
     JSONVar dataObject;
     // HIER GEÄNDERT: Wir löschen das dataObject["sensor"], da die load.php es nicht erwartet!
-    dataObject["temp"]   = temp;
-    dataObject["hum"]    = hum;
-    dataObject["co2"]    = co2;           
+     //dataObject["temp"]   = temp;
+     //dataObject["hum"]    = hum;
+     //dataObject["co2"]    = co2;           
     
-    String jsonString = JSON.stringify(dataObject);
-    Serial.print("Sende JSON an Server (jetzt ohne sensor-Feld): ");
+    // String jsonString = JSON.stringify(dataObject);
+     //Serial.print("Sende JSON an Server (jetzt ohne sensor-Feld): ");
+     //Serial.println(jsonString);
+
+     // Hier bauen wir den Text direkt als String zusammen – inklusive der wichtigen SENSOR_ID!
+    String jsonString = "{\"sensor_id\":" + String(SENSOR_ID) + ",\"temp\":" + String(temp, 1) + ",\"hum\":" + String(hum, 1) + ",\"co2\":" + String(co2) + "}";
+    
+    Serial.print("Sende JSON an Server: ");
     Serial.println(jsonString);
 
      ////////////////////////////////////////////////////////////// JSON string per HTTP POST request an den Server schicken (server2db.php)
