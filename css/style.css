@@ -293,10 +293,8 @@ form button.btn-outline {
 
 .air-value-wrapper {
   position: relative;
-
   width: 128px;
   height: 128px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -306,15 +304,11 @@ form button.btn-outline {
   position: absolute;
   bottom: 28px;
   left: 50%;
-
   transform: translateX(-50%);
-
   font-size: 16px;
   font-weight: 800;
   letter-spacing: -0.5px;
-
   color: var(--text);
-
   z-index: 2;
 }
 
@@ -383,12 +377,12 @@ form button.btn-outline {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 34px;
+  margin-bottom: 20px;
 }
 
 .room-select {
   width: 150px;
-  height: 22px;
+  min-height: 22px;
   border: none;
   outline: none;
   border-radius: 999px;
@@ -397,8 +391,17 @@ form button.btn-outline {
   font-family: "Host Grotesk", Arial, sans-serif;
   font-size: 10px;
   font-weight: 600;
-  padding: 0 14px;
-  cursor: pointer;
+  padding: 5px 14px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+}
+
+#roomNameDisplay,
+#roomNameDisplay:hover {
+  cursor: default;
 }
 
 .metric-row {
@@ -408,7 +411,7 @@ form button.btn-outline {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 38px;
+  margin-bottom: 36px;
 }
 
 .metric-box {
@@ -501,19 +504,19 @@ form button.btn-outline {
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 7px;
+  gap: 8px;
 }
 
 .legend-box {
-  width: 75px;
-  min-height: 42px;
+  width: 88px;
+  min-height: 52px;
   border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 6px 4px;
-  font-size: 7px;
-  line-height: 1.1;
+  padding: 7px 5px;
+  font-size: 8px;
+  line-height: 1.12;
   font-weight: 700;
   color: var(--white);
 }
@@ -602,6 +605,151 @@ form button.btn-outline {
   height: 48px;
   font-size: 18px;
   margin-bottom: 58px;
+}
+
+/* ROOMS */
+
+.rooms-screen {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 72px 44px 96px;
+}
+
+.rooms-title {
+  width: 100%;
+  max-width: 320px;
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -1.2px;
+  margin-bottom: 36px;
+  text-align: left;
+}
+
+.rooms-list {
+  width: 100%;
+  max-width: 320px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.room-card {
+  width: 100%;
+  max-width: 320px;
+  min-height: 230px;
+  border-radius: 14px;
+  padding: 28px 24px 26px;
+  text-align: left;
+}
+
+.room-card-pink {
+  background-color: rgba(241, 150, 151, 0.13);
+}
+
+.room-card-blue {
+  background-color: rgba(112, 158, 207, 0.13);
+}
+
+.room-card h2 {
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+.room-card-pink h2 {
+  color: var(--pink);
+}
+
+.room-card-blue h2 {
+  color: var(--blue);
+}
+
+.room-card label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.room-field {
+  width: 100%;
+  height: 42px;
+  border: none;
+  outline: none;
+  border-radius: 999px;
+  background-color: var(--grey);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  font-family: "Host Grotesk", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+
+.room-card .add-room-btn {
+  width: 100%;
+  height: 42px;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Host Grotesk", Arial, sans-serif;
+  color: var(--white);
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.room-card .add-room-btn span {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.room-card .add-room-btn strong {
+  display: none;
+}
+
+.add-room-btn {
+  border: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Host Grotesk", Arial, sans-serif;
+  color: var(--text);
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.add-room-btn span {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.add-room-btn strong {
+  font-size: 42px;
+  line-height: 0.8;
+  font-weight: 800;
+}
+
+.rooms-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin: 0;
+  font-weight: 700;
 }
 
 /* BOTTOM NAV */
@@ -751,7 +899,7 @@ form button.btn-outline {
   }
 
   .home-screen .room-select-wrapper {
-    margin-bottom: 32px;
+    margin-bottom: 20px;
   }
 
   .metric-row {
@@ -767,10 +915,15 @@ form button.btn-outline {
     height: 110px;
   }
 
+  .legend {
+    gap: 8px;
+  }
+
   .legend-box {
     width: 96px;
-    min-height: 58px;
+    min-height: 56px;
     font-size: 8px;
+    padding: 7px 5px;
   }
 
   .profile-screen {
@@ -809,159 +962,6 @@ form button.btn-outline {
     margin-bottom: 0;
   }
 
-  .bottom-nav {
-    width: calc(100% - 56px);
-    max-width: 260px;
-    height: 56px;
-    bottom: 18px;
-  }
-
-  .nav-item img {
-    width: 26px;
-    height: 26px;
-  }
-}
-
-/* ROOMS */
-
-.rooms-screen {
-  width: 100%;
-  max-width: 920px;
-  min-height: 100vh;
-
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 72px 64px 96px;
-}
-
-.rooms-title {
-  width: 100%;
-  max-width: 760px;
-
-  font-size: 48px;
-  line-height: 1;
-  font-weight: 800;
-  letter-spacing: -1.6px;
-
-  margin-bottom: 48px;
-  text-align: left;
-}
-
-.rooms-list {
-  width: 100%;
-  max-width: 760px;
-
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 48px;
-
-  margin-bottom: 44px;
-}
-
-.room-card {
-  width: 100%;
-  min-height: 230px;
-
-  border-radius: 14px;
-
-  padding: 28px 28px 26px;
-  text-align: left;
-}
-
-.room-card-pink {
-  background-color: rgba(241, 150, 151, 0.13);
-}
-
-.room-card-blue {
-  background-color: rgba(112, 158, 207, 0.13);
-}
-
-.room-card h2 {
-  font-size: 24px;
-  line-height: 1;
-  font-weight: 800;
-
-  margin-bottom: 30px;
-}
-
-.room-card-pink h2 {
-  color: var(--pink);
-}
-
-.room-card-blue h2 {
-  color: var(--blue);
-}
-
-.room-card label {
-  display: block;
-
-  font-size: 12px;
-  font-weight: 800;
-  color: #000000;
-
-  margin-bottom: 10px;
-}
-
-.room-field {
-  width: 100%;
-  height: 38px;
-
-  border-radius: 999px;
-  background-color: var(--grey);
-
-  display: flex;
-  align-items: center;
-
-  padding: 0 16px;
-
-  font-size: 14px;
-  font-weight: 500;
-
-  margin-bottom: 28px;
-}
-
-.add-room-btn {
-  border: none;
-  background: transparent;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  font-family: "Host Grotesk", Arial, sans-serif;
-  color: var(--text);
-
-  cursor: pointer;
-
-  margin-top: 4px;
-}
-
-.add-room-btn span {
-  font-size: 24px;
-  font-weight: 800;
-  margin-bottom: 8px;
-}
-
-.add-room-btn strong {
-  font-size: 42px;
-  line-height: 0.8;
-  font-weight: 800;
-}
-
-.rooms-empty {
-  grid-column: 1 / -1;
-  text-align: center;
-  margin: 0;
-  font-weight: 700;
-}
-
-/* MOBILE ROOMS */
-
-@media (max-width: 700px) {
   .rooms-screen {
     max-width: 390px;
     padding: 52px 28px 90px;
@@ -969,12 +969,6 @@ form button.btn-outline {
 
   .rooms-title {
     font-size: 34px;
-    margin-bottom: 36px;
-  }
-
-  .rooms-list {
-    grid-template-columns: 1fr;
-    gap: 20px;
     margin-bottom: 36px;
   }
 
@@ -988,11 +982,15 @@ form button.btn-outline {
     margin-bottom: 26px;
   }
 
-  .add-room-btn span {
-    font-size: 22px;
+  .bottom-nav {
+    width: calc(100% - 56px);
+    max-width: 260px;
+    height: 56px;
+    bottom: 18px;
   }
 
-  .add-room-btn strong {
-    font-size: 38px;
+  .nav-item img {
+    width: 26px;
+    height: 26px;
   }
 }

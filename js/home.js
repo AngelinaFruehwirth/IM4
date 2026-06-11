@@ -1,5 +1,3 @@
-let rooms = [];
-
 async function checkAuth() {
   try {
     const response = await fetch("api/protected.php", {
@@ -23,7 +21,7 @@ async function checkAuth() {
   }
 }
 
-async function loadRooms() {
+async function loadHomeData() {
   try {
     const response = await fetch("api/home.php", {
       credentials: "include",
@@ -34,39 +32,55 @@ async function loadRooms() {
       return;
     }
 
-    if (!response.ok) {
-      throw new Error("Räume konnten nicht geladen werden.");
-    }
-
     const data = await response.json();
-    rooms = data.rooms || [];
 
-    fillRoomDropdown();
-
-    if (rooms.length > 0) {
-      updateRoomDisplay(rooms[0].room_id);
-    } else {
+    if (data.status !== "success") {
       showNoData();
+      return;
     }
+
+    const roomNameDisplay = document.getElementById("roomNameDisplay");
+
+    if (roomNameDisplay) {
+      roomNameDisplay.textContent = data.room?.room_name || "Kinderzimmer";
+    }
+
+    const latest = data.latest;
+
+    if (!latest) {
+      showNoData();
+      return;
+    }
+
+    const co2 = Number(latest.co2);
+    const temp = Number(latest.temp);
+    const hum = Number(latest.hum);
+
+    if (Number.isNaN(co2)) {
+      showNoData();
+      return;
+    }
+
+    updateAirQuality(co2);
+    updateTemperature(temp);
+    updateHumidity(hum);
+
+    await loadChart();
   } catch (error) {
-    console.error("Fehler beim Laden der Räume:", error);
+    console.error("Fehler beim Laden der Home-Daten:", error);
     showNoData();
   }
 }
 
-async function loadChart(roomId) {
+async function loadChart() {
   try {
-    const response = await fetch(`api/chart.php?room_id=${roomId}`, {
+    const response = await fetch("api/chart.php", {
       credentials: "include",
     });
 
     if (response.status === 401) {
       window.location.href = "login.html";
       return;
-    }
-
-    if (!response.ok) {
-      throw new Error("Chartdaten konnten nicht geladen werden.");
     }
 
     const data = await response.json();
@@ -80,53 +94,6 @@ async function loadChart(roomId) {
     console.error("Chart loading failed:", error);
     renderAirChart([]);
   }
-}
-
-function fillRoomDropdown() {
-  const roomSelect = document.getElementById("roomSelect");
-
-  roomSelect.innerHTML = "";
-
-  if (rooms.length === 0) {
-    roomSelect.innerHTML = `<option value="">Keine Räume</option>`;
-    return;
-  }
-
-  rooms.forEach((room) => {
-    const option = document.createElement("option");
-    option.value = room.room_id;
-    option.textContent = room.room_name;
-    roomSelect.appendChild(option);
-  });
-
-  roomSelect.onchange = () => {
-    updateRoomDisplay(roomSelect.value);
-  };
-}
-
-function updateRoomDisplay(roomId) {
-  const selectedRoom = rooms.find(
-    (room) => String(room.room_id) === String(roomId)
-  );
-
-  if (!selectedRoom) {
-    showNoData();
-    return;
-  }
-
-  const co2 = Number(selectedRoom.co2);
-  const temp = Number(selectedRoom.temp);
-  const hum = Number(selectedRoom.hum);
-
-  if (Number.isNaN(co2)) {
-    showNoData();
-    return;
-  }
-
-  updateAirQuality(co2);
-  updateTemperature(temp);
-  updateHumidity(hum);
-  loadChart(roomId);
 }
 
 function updateAirQuality(value) {
@@ -209,5 +176,5 @@ window.addEventListener("load", async () => {
 
   if (!isAuthenticated) return;
 
-  await loadRooms();
+  await loadHomeData();
 });

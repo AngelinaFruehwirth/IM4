@@ -7,49 +7,71 @@ require_once __DIR__ . "/../system/config.php";
 
 if (!isset($_SESSION["user_id"])) {
     http_response_code(401);
-    echo json_encode(["error" => "Nicht eingeloggt"]);
+    echo json_encode([
+        "status" => "error",
+        "message" => "Nicht eingeloggt"
+    ]);
     exit;
 }
 
 $user_id = $_SESSION["user_id"];
 
 try {
-    $stmt = $pdo->prepare("
-        SELECT 
-            r.id AS room_id,
-            r.name AS room_name,
-            s.id AS sensor_id,
-            sd.co2,
-            sd.temp,
-            sd.hum,
-            sd.zeit
-        FROM Raeume r
-        LEFT JOIN Sensoren s 
-            ON s.raum_id = r.id
-        LEFT JOIN sensordata sd 
-            ON sd.sensor_id = s.id
-            AND sd.zeit = (
-                SELECT MAX(sd2.zeit)
-                FROM sensordata sd2
-                WHERE sd2.sensor_id = s.id
-            )
-        WHERE r.user_id = :user_id
-        ORDER BY r.name ASC
+    // Ersten Raum des eingeloggten Users holen
+    $roomStmt = $pdo->prepare("
+        SELECT id, name 
+        FROM Raeume
+        WHERE user_id = :user_id
+        ORDER BY id ASC
+        LIMIT 1
     ");
 
-    $stmt->execute([
+    $roomStmt->execute([
         "user_id" => $user_id
     ]);
 
-    $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $room = $roomStmt->fetch(PDO::FETCH_ASSOC);
+
+    // Falls noch kein Raum existiert, automatisch einen erstellen
+    if (!$room) {
+        $insertRoom = $pdo->prepare("
+            INSERT INTO Raeume (name, user_id)
+            VALUES ('Kinderzimmer', :user_id)
+        ");
+
+        $insertRoom->execute([
+            "user_id" => $user_id
+        ]);
+
+        $room = [
+            "id" => $pdo->lastInsertId(),
+            "name" => "Kinderzimmer"
+        ];
+    }
+
+    // Neusten Messwert direkt aus sensordata holen
+    $dataStmt = $pdo->query("
+        SELECT co2, temp, hum, zeit
+        FROM sensordata
+        ORDER BY zeit DESC
+        LIMIT 1
+    ");
+
+    $latest = $dataStmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode([
-        "rooms" => $rooms
+        "status" => "success",
+        "room" => [
+            "room_id" => $room["id"],
+            "room_name" => $room["name"]
+        ],
+        "latest" => $latest
     ]);
 
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode([
-        "error" => "Datenbankfehler"
+        "status" => "error",
+        "message" => "Datenbankfehler"
     ]);
 }

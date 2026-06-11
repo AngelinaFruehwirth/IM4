@@ -17,9 +17,9 @@ async function checkAuth() {
   }
 }
 
-async function loadRooms() {
+async function loadRoomName() {
   try {
-    const response = await fetch("api/room.php", {
+    const response = await fetch("api/home.php", {
       credentials: "include",
     });
 
@@ -28,86 +28,68 @@ async function loadRooms() {
       return;
     }
 
-    const result = await response.json();
+    const data = await response.json();
 
-    if (result.status === "success") {
-      renderRooms(result.rooms || []);
-    } else {
-      alert(result.message || "Räume konnten nicht geladen werden.");
+    if (data.status === "success") {
+      const roomInput = document.getElementById("roomNameInput");
+      roomInput.value = data.room?.room_name || "Kinderzimmer";
     }
   } catch (error) {
-    console.error("Rooms loading failed:", error);
-    alert("Beim Laden der Räume ist etwas schiefgelaufen.");
+    console.error("Zimmername konnte nicht geladen werden:", error);
   }
 }
 
-function renderRooms(rooms) {
-  const roomsList = document.getElementById("roomsList");
-  roomsList.innerHTML = "";
+async function saveRoomName() {
+  const roomInput = document.getElementById("roomNameInput");
+  const roomName = roomInput.value.trim();
 
-  if (rooms.length === 0) {
-    roomsList.innerHTML = `
-      <p class="rooms-empty">Noch keine Zimmer vorhanden.</p>
-    `;
+  if (!roomName) {
+    alert("Bitte gib einen Zimmernamen ein.");
     return;
   }
 
-  rooms.forEach((room, index) => {
-    const card = document.createElement("article");
-    card.className = `room-card ${index % 2 === 0 ? "room-card-pink" : "room-card-blue"}`;
-
-    card.innerHTML = `
-      <h2>Zimmer ${index + 1}</h2>
-
-      <label>Zimmername</label>
-      <div class="room-field">${room.room_name || "-"}</div>
-
-      <label>Gerätenummer</label>
-      <div class="room-field">${room.serien_nr || "-"}</div>
-    `;
-
-    roomsList.appendChild(card);
-  });
-}
-
-async function addRoom() {
-  const roomName = prompt("Zimmername eingeben:");
-  if (!roomName || !roomName.trim()) return;
-
-  const serialNumber = prompt("Gerätenummer eingeben:");
-  if (!serialNumber || !serialNumber.trim()) return;
-
   try {
-    const response = await fetch("api/room.php", {
+    const response = await fetch("api/update-room-name.php", {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: new URLSearchParams({
-        roomName: roomName.trim(),
-        serialNumber: serialNumber.trim(),
+        roomName: roomName,
       }),
     });
 
     const result = await response.json();
 
     if (result.status === "success") {
-      await loadRooms();
+      alert("Zimmername wurde gespeichert.");
     } else {
-      alert(result.message || "Zimmer konnte nicht hinzugefügt werden.");
+      alert(result.message || "Zimmername konnte nicht gespeichert werden.");
     }
   } catch (error) {
-    console.error("Room creation failed:", error);
-    alert("Beim Hinzufügen ist etwas schiefgelaufen.");
+    console.error("Speichern fehlgeschlagen:", error);
+    alert("Beim Speichern ist etwas schiefgelaufen.");
   }
 }
 
 window.addEventListener("load", async () => {
   const isAuthenticated = await checkAuth();
+
   if (!isAuthenticated) return;
 
-  await loadRooms();
+  await loadRoomName();
 
-  document.getElementById("addRoomBtn").addEventListener("click", addRoom);
+  const saveRoomBtn = document.getElementById("saveRoomBtn");
+
+  saveRoomBtn.addEventListener("click", saveRoomName);
+
+  const roomInput = document.getElementById("roomNameInput");
+
+  roomInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      saveRoomName();
+      roomInput.blur();
+    }
+  });
 });

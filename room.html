@@ -19,16 +19,26 @@
   <main class="app-page">
     <section class="rooms-screen">
 
-      <h1 class="rooms-title">Deine Zimmer</h1>
+      <h1 class="rooms-title">Dein Zimmer</h1>
 
-      <div id="roomsList" class="rooms-list">
-        <!-- Räume werden per JS geladen -->
-      </div>
+      <article class="room-card room-card-pink">
 
-      <button id="addRoomBtn" class="add-room-btn">
-        <span>Zimmer hinzufügen</span>
-        <strong>+</strong>
-      </button>
+        <h2>Zimmername</h2>
+
+        <label for="roomNameInput">Name bearbeiten</label>
+
+        <input
+          id="roomNameInput"
+          class="room-field"
+          type="text"
+          placeholder="Zimmername"
+        >
+
+        <button id="saveRoomBtn" class="add-room-btn">
+          <span>Speichern</span>
+        </button>
+
+      </article>
 
       <nav class="bottom-nav">
         <a href="home.html" class="nav-item">
