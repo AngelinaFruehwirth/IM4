@@ -22,7 +22,7 @@ unsigned long timerDelay = 15000;                                  // alle 15s w
 const char* ssid     = "Alpha-Härdöpfu";                             // WLAN SSID
 const char* pass     = "Rainbowkid_20";                             // WLAN Passwort
 const char* serverURL = "https://im4.angelina-fruehwirth.ch/api/load.php";  // Server-Adresse: hier kann http oder https stehen, aber nicht ohne, zB. https://im4.physco.dorfkneipe.ch/api/load.php
-const int SENSOR_ID = 1;
+const int sensor_id = 1;
 
 bool isWlanConnected = 0;
 int led = LED_BUILTIN;
@@ -132,7 +132,7 @@ void loop() {
      //Serial.println(jsonString);
 
      // Hier bauen wir den Text direkt als String zusammen – inklusive der wichtigen SENSOR_ID!
-    String jsonString = "{\"sensor_id\":" + String(SENSOR_ID) + ",\"temp\":" + String(temp, 1) + ",\"hum\":" + String(hum, 1) + ",\"co2\":" + String(co2) + "}";
+    String jsonString = "{\"sensor_id\":" + String(sensor_id) + ",\"temp\":" + String(temp, 1) + ",\"hum\":" + String(hum, 1) + ",\"co2\":" + String(co2) + "}";
     
     Serial.print("Sende JSON an Server: ");
     Serial.println(jsonString);
