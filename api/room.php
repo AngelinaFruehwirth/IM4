@@ -1,3 +1,9 @@
+/* BESCHREIBUNG: Pfüft, ob der User angemeldet ist. Stellt einen API-Endpunkt zur Verwaltung von Räumen und Sensoren bereit. 
+Per GET werden vorhandene Räume und die dazugehörigen Sensoren aus der Datenbank geladen. 
+Per POST werden neue Räume inklusive zugeordneter Sensoren in der DB erstellt und gespeichert. 
+Diese Kommunikation erfolgt über JSON-Antworten.*/
+
+
 <?php
 session_start();
 header('Content-Type: application/json');

@@ -1,3 +1,8 @@
+/*BESCHREIBUNG: Steuert die Raum-Verwaltung der Webapp.
+Die Datei überprüft auf eine gültige Session über protected.php.
+Rauminformationen werden über home.php vom Backend geladen und verarbeitet.
+Änderungen am Zimmernamen werden per POST an update-room-name.php gesendet und in der Datenbank aktualisiert. */
+
 async function checkAuth() {
   try {
     const response = await fetch("api/protected.php", {

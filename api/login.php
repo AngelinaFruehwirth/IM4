@@ -1,3 +1,8 @@
+/* BESCHREIBUNG: Prüft, ob für das Login eine Emailadresse und Passwort (gehasht) eingegeben wurde und gleicht diese mit den gespeicherten Daten in der Datenbank ab. 
+Stimmen die eingegebenen Datne mit den Daten in der DB überein, wird eine Session gestartet (mit der User_id, E-Mail und Name hinterlegt).
+Sollte Passwort oder Email nicht eingegeben werden, erscheint eine Fehlermeldung.
+Wurde die E-Mail oder das Passwort falsche eingegeben, was nach durch das Abgleichen mit den gesammelten Daten in der DB erfolgt, erscheint eine Fehlermeldung.*/
+
 <?php
 // login.php
 ini_set('session.cookie_httponly', 1);

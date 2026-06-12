@@ -1,3 +1,8 @@
+/*BESCHREIBUNG: Steuert die Funktionen der Homeseite der Webapp.
+Prüft, ob der User angemeldet ist, lädt dann die aktuellen Sensordaten sowie den Messwerteverlauf vom Server und aktualisiert die Anzeige
+der Temperatur, Luftqualität und Luftfeuchtigkeit.
+Zusätzlich wird die Luftqualität wie definiert bewertet, ob sie gut, mittel oder schlecht ist, damit das mit CSS und HTML entsprechend grafisch dargestellt werden kann.*/
+
 async function checkAuth() {
   try {
     const response = await fetch("api/protected.php", {

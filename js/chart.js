@@ -1,3 +1,6 @@
+/*BESCHREIBUNG: Erstellt und aktualisiert das Diagramm zur Darstellung des Luftqualität-Verlaufs der letzten 24h.
+Die Messwerte werden aus den bereitgestellten Daten des Senors in der DB ausgelesen und mithilfe von chart.js als Liniendiagramm auf der Webapp dargestellt.*/
+
 let airChart = null;
 
 function renderAirChart(history) {

@@ -1,9 +1,6 @@
-/************************************************
-Kapitel 12: Website2DB > Schritt 2: Website -> DB
-sender.js
-Hier Werten die Formulardaten aus sender.html extrahiert, als JSON string formattiert und per HTTP POST Request an load.php geschickt.
-Später werden die HTTP Nachrichten nicht mehr von einer Website geschickt, sondern von einem ESP
-******************************************************/
+/*BESCHREIBUNG: Übertragung der Sensordaten an PHP -> DB
+Hier Werten die Formulardaten aus sender.html extrahiert, als JSON string formattiert und per POST Request an load.php geschickt.
+Später werden die HTTP Nachrichten nicht mehr von einer Website geschickt, sondern von einem ESP. */
 
 const form = document.getElementById("dataForm");
 

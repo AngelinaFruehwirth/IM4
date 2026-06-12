@@ -1,3 +1,7 @@
+/*BESCHREIBUNG: Steuert die Funktionen der Profilseite.
+Prüft beim Laden mithilfe von protected.php, ob der Nutzer eingeloggt ist, und leitet ihn andernfalls zur Login-Seite weiter. 
+Zusätzlich ermöglicht sie das Ausloggen sowie das Ändern von Benutzername und Passwort über API-Anfragen an das PHP-Backend.*/
+
 async function checkAuth() {
   try {
     const response = await fetch("api/protected.php", {

@@ -1,3 +1,5 @@
+/* BESCHREIBUNG: Beendet die aktive Session und meldet den User sicher von der Webapp ab.*/
+
 <?php
 // logout.php
 session_start();

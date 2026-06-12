@@ -1,3 +1,9 @@
+/*BESCHREIBUNG: Ermöglicht es, dem angemeldeten User, sein Passwort zu ändern. 
+Zur Änderung muss das alte Passwort und das Neue eingegeben werden. Das aktuelle Passwort wird zuerst in der DB überprüft, ob es mit dem gespeicherten übereinstimmt.
+Das neu eingegebene Passwort wird gehasht und die Änderung in der Datenbank gespeichert.
+Ist das aktuelle Passwort falsch, oder das neue zu kurz oder ein Feld belibt leer, erscheint eine Fehlermeldung.
+Das Ergebnis wird als JSON-Antwort an die Webapp zurückgegeben. */ 
+
 <?php
 session_start();
 header('Content-Type: application/json');

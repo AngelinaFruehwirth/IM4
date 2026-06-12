@@ -1,3 +1,8 @@
+/* BESCHREIBUNG: Stellt einen geschützten API-Endpunkt bereit.
+Überprüft anhand der Session (user_id, name, email), ob ein Benutzer angemeldet ist. Bei erfolgreicher Authentifizierung 
+werden die Userdaten als JSON-Objekt an die Webanwendung zurückgegeben.
+Nicht angemeldete Benutzer erhalten eine HTTP-401-Fehlermeldung und der Zugriff funktioniert nicht. */
+
 <?php
 session_start();
 

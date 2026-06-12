@@ -1,12 +1,9 @@
-<?php
- /*****************************************************
- * Kapitel 12: Website2DB > Schritt 2: Website -> DB
- * load.php
- * Daten als JSON-String vom Formular sender.html (später vom MC) serverseitig empfangen und Daten in die Datenbank einfügen
- * Datenbank-Verbindung
-**************************/
+/* BESCHREIBUNG: Kapitel 12: Website2DB > Schritt 2: Website -> DB
+Empfängt Sensordaten als JSON-String per HTTP-POST-Anfrage von sender.html (später von einem Mikrocontroller) und speichert die Messwerte in der Datenbank.
+Verarbeitet Sensor-ID, Temperatur, Luftfeuchtigkeit und CO₂-Wert und fügt diese in die Tabelle sensordata ein. */
 
-require_once("../system/config.php");
+<?php
+ require_once("../system/config.php");
 // echo "This script receives HTTP POST messages and pushes their content into the database.";
 
 

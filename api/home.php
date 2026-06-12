@@ -1,3 +1,7 @@
+/* BESCHREIBUNG: Session wird gestartet und geprüft, ob für den User bereits ein Raum registriert wurde in der Datenbank. Falls nicht, wird automatisch ein Raum erstellt. 
+Aktuelle Messwerte des verbundenen Sensors werden von der Datenbank geholt und ausgespielt.
+Zeigt Fehlermeldung, wenn nicht eingeloggt oder keine Verbindung zur Datenbank besteht. */
+
 <?php
 session_start();
 

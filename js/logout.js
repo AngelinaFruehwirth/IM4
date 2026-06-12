@@ -1,3 +1,7 @@
+/*BESCHREIBUNG: Verarbeitet die Abmeldung eines Users.
+Beim Clicken des Logout-Buttons wird eine Anfrage an logout.php gesendet, um die aktive Session zu beenden. 
+Nach erfolgreicher Abmeldung, wird der User auf die Login-Seite weitergeleitet. */
+
 // logout.js
 document.getElementById("logoutBtn").addEventListener("click", async (e) => {
   // Prevent the default button behavior

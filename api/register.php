@@ -1,3 +1,9 @@
+/* BESCHREIBUNG: Empfängt und verabreitet die Registrierungsdaten neuer User. Die übermittelten Registrierungsdaten werden auf bereits vorhandene E-Mail-Adressen
+in der DB geprüft und anschliessend, falls noch nicht vorhanden, in der Datenbank gespeichert.
+Das Passwort wird vor der Speicherung mit password_hash() gehasht. Das Ergebnis der Registrierung wird als JSON-Antwort an die Webapp zurückgegeben. 
+Werden keine Daten eingegeben, erscheint eine Fehlermeldung. Wird eine E-Mailadresse eingegeben, die bereits existiert in der DB, erschient die Meldung, dass diese 
+E-Mail Adresse bereits verwendet wird, */
+
 <?php
 // register.php
 session_start();

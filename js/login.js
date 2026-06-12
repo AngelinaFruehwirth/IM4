@@ -1,3 +1,7 @@
+/* BESCHREIBUNG: Steuert den Login-Prozess der Webapp.
+Die eingegebenen Anmeldedaten werden an den Server gesendet und die Antwort von login.php ausgewertet. 
+Abhängig von der Antwort vom login.php erfolgt eine Weiterleitung zur Profilseite oder es wird eine Fehlermeldung angezeigt. */
+
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 

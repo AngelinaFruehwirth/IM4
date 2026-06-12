@@ -1,3 +1,9 @@
+/* BESCHREIBUNG: Steuert die Registrierung auf der Webapp.
+Die eingegebenen Daten (E-Mail, Name und Passwort) werden mit "fetch" an register.php gesendet. 
+Die Antwort des Servers wird ausgewertet und entscheidet abhängig vom Status,
+ob die Registrierung erfolgreich war oder eine Fehlermeldung angezeigt wird. 
+Bei erfolgreicher Registrierung wird der User auf die Login-Seite weitergeleitet. */
+
 // register.js
 document
   .getElementById("registerForm")

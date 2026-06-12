@@ -1,3 +1,7 @@
+/* BESCHREIBUNG: Prüft, ob der User angemeldet ist.
+Der neu eingegebene Raumname wird validiert und in der DB für den entsprechenden Raum und eingeloggten User aktualisiert. 
+Erfolgs- und Fehlermeldungen, wenn z.B. das Feld leer bleibt oder die Änderung erfolgreich war, werden als JSON-Antwort an die Webapp zurückgegeben. */
+
 <?php
 session_start();
 

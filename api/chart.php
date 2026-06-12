@@ -1,3 +1,6 @@
+/* BESCHREIBUNG: Session wird gestartet und die Sensormesswerte der letzten 24 Stunden aus der Datenbank geladen und für die Darstellung im Diagramm bereitgestellt.
+Zeigt Fehlermeldung, wenn nicht eingeloggt oder keine Verbindung zur Datenbank besteht. */
+
 <?php
 session_start();
 

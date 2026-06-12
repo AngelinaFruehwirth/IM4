@@ -1,3 +1,8 @@
+/* BESCHREIBUNG: Prüft den Authentifizierungsstatus des Benutzers für geschützte Seiten, also Bereiche, für die man ein Login braucht.
+Sendet beim Laden eine Anfrage an protected.php, um zu überprüfen, ob eine gültige Session besteht. 
+Falls es keine gültige Session gibt (Status 401), wird der Benutzer zur Login-Seite weitergeleitet.
+Zusätzlich wird die vom Server zurückgegebenen Benutzerdaten (z. B. Name und User-ID), die für die Anzeige und Nutzung der geschützten Seite benötigt werden, verarbeitet. */
+
 async function checkAuth() {
   try {
     const response = await fetch("/api/protected.php", {
