@@ -74,6 +74,9 @@ void loop() {
     return;
   }
 
+    // float wert = (float)random(0, 1000) / 10;         // ersetzen durch sensor !! Zunächst zufällige Zahl 0 - 100
+    // Serial.println(temp);
+   //  Serial.println(hum);
 
     Serial.print("temp: ");
     Serial.print(temp, 1); // 1 Nachkommastelle
@@ -114,11 +117,6 @@ void loop() {
       ring.setPixelColor(i, ring.Color(r, g, b));
     }
     ring.show(); // Ring aktualisieren, damit er leuchtet
-
-  
-////////////////////////////////////////////////////////////// JSON zusammenbauen
-
-    JSONVar dataObject;
 
      // Hier bauen wir den Text direkt als String zusammen – inklusive der wichtigen SENSOR_ID!
     String jsonString = "{\"sensor_id\":" + String(sensor_id) + ",\"temp\":" + String(temp, 1) + ",\"hum\":" + String(hum, 1) + ",\"co2\":" + String(co2) + "}";
