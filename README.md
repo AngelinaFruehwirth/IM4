@@ -57,15 +57,54 @@ Sobald neue Sensordaten in der Datenbank eintreffen, werden diese automatisch in
 
 #### Bauanleitung Physical Computing
 
-* ***Was muss ich wie bauen, verbinden, installieren?***  
-* *ergänze: **Komponentenplan** (betrifft Physical Computing, vgl. Slides Kapitel 15): Schaubild enthält*  
-  * *die eingesetzten Komponenten*  
-  * *die verbundenen Sensoren und Aktoren*  
-  * *die Programme (mit Dateinamen)*  
-  * *die Kommunikationswege*  
-* *ergänze: **Steckplan** (betrifft Physical Computing, vgl. Slides Kapitel 15): generiert z.B. mit Fritzing (empfohlen), Tinkercad, Wokwi*  
-  * *beachtet die [Fritzing Parts](https://github.com/Interaktive-Medien/im_physical_computing/tree/main/15_Intro_Projektdoku) extra für euch*  
-* *ggf. **Bildmaterial***
+* ***Was muss ich wie bauen, verbinden, installieren?*** 
+
+*# Physischer Sensorknoten: Aufbau & Firmware 
+
+Dieses Projekt beinhaltet einen vollautomatischen physischen Sensorknoten, der die Temperatur, die relative Luftfeuchtigkeit und die Gas-/CO₂-Konzentration der Raumluft misst. Die Daten werden lokal über eine interaktive LED-Ampel visualisiert und parallel im 15-Sekunden-Takt via WLAN an unseren Webserver zur Speicherung in einer relationalen MySQL-Datenbank übertragen. 
+
+Folge diesen Schritten, um den physischen Sensorknoten nachzubauen, zu verkabeln und in Betrieb zu nehmen. 
+
+#### A. Benötigte Hardware-Komponenten 
+* 1x ESP32-C6 Microcontrollerboard
+* 1x DHT11 Temperatur- & Luftfeuchtigkeitssensor *(Hinweis: Für den echten, physischen Aufbau)* 
+* 1x MQ-135 Gassensor (Luftqualität / CO₂-Äquivalent) 
+* 1x LED-Ring WS2812B
+* 1x Akku LiFePo4 3000mAh
+* Steckplatine & Jumper-Kabel m-m + f-f
+
+#### B. Hardware-Verkabelung (Steckplan) 
+
+Verkable das System gemäss dem vordefinierten Schema. Nutze die äusseren Stromschienen der Steckplatine für die gemeinsame Energieversorgung: 
+
+**Wichtiger Hinweis zum Steckplan:** 
+Da der DHT11-Sensor in der Bauteilbibliothek von Wokwi standardmässig nicht vorhanden war, wurde im digitalen Steckplan stattdessen der **DHT22**-Sensor verwendet. Die Pinbelegung und die logische Verdrahtung im Steckplan sind jedoch identisch mit dem realen DHT11-Setup. *
+
+**Gemeinsame Schienen:** `3V3` des ESP32 an die rote Plus-Schiene (+), `GND` an die blaue Minus-Schiene (-) der Steckplatine. * 
+**DHT11 / DHT22 (Wokwi):** VCC an (+), GND an (-), DATA / SDA an **GPIO 7**. 
+**MQ-135 Gassensor:** VCC an (+), GND an (-), AO (Analog Out) an **GPIO 4**. * **LED-Ring WS2812B:** VCC an (+), GND an (-), DI / DIN (Data In) an **GPIO 5**. 
+
+![Steckplan](resources/bilder_readme/Steckplan.png)
+
+#### C. Firmware-Setup & Upload 
+1. Öffne die **Arduino IDE** auf deinem Computer und installiere über den *Library Manager* folgende Bibliotheken: 
+* `DHT sensor library` by Adafruit 
+* `Adafruit NeoPixel` by Adafruit
+2. Verbinde das ESP32-C6 via USB-C mit deinem Computer.
+3. Wähle unter *Werkzeuge -> Board* das **ESP32-C6 Dev Module** aus. 
+4. **Wichtig für die serielle Ausgabe:** Stelle im Menü unter *Werkzeuge -> USB CDC On Boot* zwingend auf **Enabled**, da sonst keine Live-Ausgaben im Seriellen Monitor angezeigt werden.
+5. Öffne die im Repository hinterlegte Datei `mc.ino`.
+
+6. Trage deine lokalen WLAN-Zugangsdaten in den Code ein:
+ ```cpp 
+const char* ssid = "DEIN_WLAN_NAME"; 
+const char* pass = "DEIN_WLAN_PASSWORT";
+7. Klicke auf Upload (Pfeil-Symbol), um die Firmware auf das Board zu brennen.
+8. Nach dem erfolgreichen Upload kannst du den Seriellen Monitor (Lupe oben rechts, Baudrate: 115200) öffnen, um den Verbindungsaufbau live zu verfolgen und zu debuggen.
+9. Sobald die WLAN-Verbindung steht, liest der ESP32-C6 die Werte ein, steuert die LED-Ampel und speichert die Daten vollautomatisch in der SQL-Datenbank ab.
+10. Mobiler Betrieb: Nach erfolgreichem Testlauf kann das USB-Kabel entfernt und der ESP32-C6 mit dem Akku LiFePo4 3000mAh verbunden werden. Der Sensorknoten arbeitet nun autark weiter und überträgt die Messwerte drahtlos an die Datenbank.
+
+![Web Backend](resources/bilder_readme/web_backend.png)
 
 ## technische Details
 
