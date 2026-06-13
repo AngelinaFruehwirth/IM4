@@ -19,8 +19,8 @@
 unsigned long lastTime = 0;
 unsigned long timerDelay = 15000;                                  // alle 15s wird ein neuer Wert verschickt
 
-const char* ssid     = "Alpha-Härdöpfu";                             // WLAN SSID
-const char* pass     = "Rainbowkid_20";                             // WLAN Passwort
+const char* ssid     = "5613 7264";                             // WLAN SSID
+const char* pass     = "8ak3-5ivh-cw7b-ibcr";                             // WLAN Passwort
 const char* serverURL = "https://im4.angelina-fruehwirth.ch/api/load.php";  // Server-Adresse: hier kann http oder https stehen, aber nicht ohne, zB. https://im4.physco.dorfkneipe.ch/api/load.php
 const int sensor_id = 1;
 
@@ -74,9 +74,6 @@ void loop() {
     return;
   }
 
-    // float wert = (float)random(0, 1000) / 10;         // ersetzen durch sensor !! Zunächst zufällige Zahl 0 - 100
-    // Serial.println(temp);
-   //  Serial.println(hum);
 
     Serial.print("temp: ");
     Serial.print(temp, 1); // 1 Nachkommastelle
@@ -122,14 +119,6 @@ void loop() {
 ////////////////////////////////////////////////////////////// JSON zusammenbauen
 
     JSONVar dataObject;
-    // HIER GEÄNDERT: Wir löschen das dataObject["sensor"], da die load.php es nicht erwartet!
-     //dataObject["temp"]   = temp;
-     //dataObject["hum"]    = hum;
-     //dataObject["co2"]    = co2;           
-    
-    // String jsonString = JSON.stringify(dataObject);
-     //Serial.print("Sende JSON an Server (jetzt ohne sensor-Feld): ");
-     //Serial.println(jsonString);
 
      // Hier bauen wir den Text direkt als String zusammen – inklusive der wichtigen SENSOR_ID!
     String jsonString = "{\"sensor_id\":" + String(sensor_id) + ",\"temp\":" + String(temp, 1) + ",\"hum\":" + String(hum, 1) + ",\"co2\":" + String(co2) + "}";
