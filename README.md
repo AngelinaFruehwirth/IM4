@@ -108,8 +108,6 @@ const char* pass = "DEIN_WLAN_PASSWORT";
 
 ## technische Details
 
-// Hier sollte das Verständnis ersichtlich sein / Wie stehen die Dateien in Beziehung zueinander, Wie reden Die Dateien miteinander, Wie ist der Weg der Daten
-
 * **Projektstruktur / Code-Struktur:** \[*Hinweis: Der Code selbst muss im Repository liegen und im Kopfbereich jeder Datei eine kurze Zusammenfassung enthalten.*\] 
 Die Benutzeroberfläche der WebApp besteht aus mehreren HTML-Seiten wie login.html, register.html, room.html oder profil.html.
 Im Ordner api befinden sich die PHP-Dateien für Funktionen wie Login, Registrierung, Logout sowie das Laden und Speichern von Daten. Die Datei system/config.php stellt die Verbindung zur Datenbank her. Die Datenbankstruktur befindet sich in der Datei db.sql. Für das Design der WebApp wird die Datei css/style.css verwendet. Zusätzliche Funktionen und Interaktionen werden über die JavaScript-Dateien im Ordner js umgesetzt.
